@@ -32,6 +32,13 @@
     </section>
 
     <script>
+      function goTo(page) {
+        window.location.href = `${location.origin}${location.pathname.replace(
+          /[^\/]*$/,
+          ""
+        )}${page}`;
+      }
+
       const toggleLink = document.getElementById("toggle-link");
       const formTitle = document.getElementById("form-title");
       const nameField = document.getElementById("name-field");
@@ -95,7 +102,7 @@
           }
 
           // Redirect to dashboard
-          window.location.href = "dashboard.html";
+          goTo("dashboard.html");
         } catch (error) {
           alert("Error: " + error.message);
         }
@@ -104,7 +111,7 @@
       // Auto-redirect if already logged in
       auth.onAuthStateChanged((user) => {
         if (user) {
-          window.location.href = "dashboard.html";
+          goto("dashboard.html");
         }
       });
     </script>

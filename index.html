@@ -371,6 +371,13 @@
     </footer>
 
     <script>
+      function goTo(page) {
+        window.location.href = `${location.origin}${location.pathname.replace(
+          /[^\/]*$/,
+          ""
+        )}${page}`;
+      }
+
       function toggleMenu() {
         const navRight = document.querySelector(".nav-right");
         navRight.classList.toggle("show");
@@ -415,7 +422,7 @@
           const btn = document.getElementById("getStartedBtn");
           if (btn) {
             btn.onclick = () => {
-              window.location.href = "/dashboard.html";
+              goTo("/dashboard.html");
             };
           }
         } else {
