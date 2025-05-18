@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="dashboard-section">
+      <h1>Welcome, <span id="business-name">Loading...</span></h1>
+      <p>Email: <span id="business-email"></span></p>
+      <p>Plan: <strong id="current-plan">Loading...</strong></p>
+      <p>Messages Left: <strong id="message-count">Loading...</strong></p>
+
+      <div class="actions">
+        <button id="upgrade-btn">Upgrade Plan</button>
+        <button id="buy-msgs-btn">Buy More Messages</button>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </section>
+
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+      // Firebase config (re-use your existing one)
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        appId: "YOUR_APP_ID",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      // Auth guard
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = "/signup-login.html";
+          return;
+        }
+
+        const uid = user.uid;
+        try {
+          const doc = await db.collection("businesses").doc(uid).get();
+          const data = doc.data();
+
+          document.getElementById("business-name").textContent =
+            data.name || "Business";
+          document.getElementById("business-email").textContent = data.email;
+          document.getElementById("current-plan").textContent =
+            data.plan || "Free";
+          document.getElementById("message-count").textContent =
+            data.messagesLeft ?? "0";
+        } catch (err) {
+          console.error("Error loading dashboard:", err);
+        }
+      });
+
+      // Logout
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        auth
+          .signOut()
+          .then(() => (window.location.href = "/signup-login.html"));
+      });
+
+      // Upgrade Plan
+      document.getElementById("upgrade-btn").addEventListener("click", () => {
+        window.location.href = "/upgrade.html"; // You can make this page with Stripe checkout later
+      });
+
+      // Buy More Messages
+      document.getElementById("buy-msgs-btn").addEventListener("click", () => {
+        window.location.href = "/buy-messages.html"; // Or open a modal
+      });
+    </script>
+  </body>
+</html>

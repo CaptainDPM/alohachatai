@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up / Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  </head>
+  <body>
+    <section class="auth-section">
+      <div class="auth-card" id="auth-card">
+        <h2 id="form-title">Sign Up</h2>
+        <form id="auth-form">
+          <input type="text" placeholder="Name" id="name-field" required />
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Password" required />
+          <button type="submit">Create Account</button>
+        </form>
+        <p class="toggle-auth">
+          Already have an account? <a href="#" id="toggle-link">Log in</a>
+        </p>
+      </div>
+    </section>
+
+    <script>
+      const toggleLink = document.getElementById("toggle-link");
+      const formTitle = document.getElementById("form-title");
+      const nameField = document.getElementById("name-field");
+      const authForm = document.getElementById("auth-form");
+
+      let isSignUp = true;
+
+      toggleLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        isSignUp = !isSignUp;
+        formTitle.textContent = isSignUp ? "Sign Up" : "Login";
+        toggleLink.textContent = isSignUp ? "Log in" : "Sign up";
+        nameField.style.display = isSignUp ? "block" : "none";
+        authForm.querySelector("button").textContent = isSignUp
+          ? "Create Account"
+          : "Login";
+      });
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
+        authDomain: "chatbot-8cc09.firebaseapp.com",
+        projectId: "chatbot-8cc09",
+        storageBucket: "chatbot-8cc09.firebasestorage.app",
+        messagingSenderId: "362283614085",
+        appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+        measurementId: "G-MWYVYVSGHE",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      authForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name-field").value.trim();
+        const email = authForm
+          .querySelector('input[type="email"]')
+          .value.trim();
+        const password = authForm.querySelector('input[type="password"]').value;
+
+        try {
+          if (isSignUp) {
+            // Sign up new user
+            const userCred = await auth.createUserWithEmailAndPassword(
+              email,
+              password
+            );
+            const uid = userCred.user.uid;
+
+            // Save business/user info in Firestore
+            await db.collection("businesses").doc(uid).set({
+              name,
+              email,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            alert("Account created! Redirecting...");
+          } else {
+            // Log in existing user
+            await auth.signInWithEmailAndPassword(email, password);
+            alert("Logged in! Redirecting...");
+          }
+
+          // Redirect to dashboard
+          window.location.href = "dashboard.html";
+        } catch (error) {
+          alert("Error: " + error.message);
+        }
+      });
+
+      // Auto-redirect if already logged in
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          window.location.href = "dashboard.html";
+        }
+      });
+    </script>
+  </body>
+</html>
