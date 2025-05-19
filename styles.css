@@ -22,6 +22,127 @@ body {
   background-color: white;
 }
 
+.auth-body {
+  background: #f5f7ff;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.auth-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+}
+
+.auth-title {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.form-section-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--dark);
+}
+
+.form-input,
+.form-textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.primary-btn {
+  background-color: var(--primary);
+  color: white;
+}
+
+.secondary-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.upload-area {
+  border: 2px dashed var(--border);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-area:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.logo-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-top: 1rem;
+  display: none;
+}
+
+.subtext {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.test-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+}
+
+.form-status {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  background-color: rgba(75, 181, 67, 0.1);
+  color: var(--success);
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
 .dashboard-section {
   background: #ffffff;
   padding: 2.5rem;
