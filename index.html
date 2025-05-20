@@ -315,6 +315,45 @@
         </div>
     </footer>
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-container" style="
+      display:none; 
+      position:fixed; 
+      bottom:80px; 
+      right:20px; 
+      width:380px; 
+      height:600px; 
+      background:white; 
+      border-radius:12px; 
+      box-shadow:0 5px 25px rgba(0,0,0,0.15);
+      z-index:1000;
+      overflow:hidden;
+    ">
+        <iframe src="https://mistral-chatbot.vercel.app/" style="width:100%; height:100%; border:none;"
+            allow="microphone"></iframe>
+    </div>
+
+    <button id="chatbot-button" style="
+      position:fixed; 
+      bottom:20px; 
+      right:20px; 
+      width:60px; 
+      height:60px; 
+      border-radius:50%; 
+      background:#f72585; 
+      color:white; 
+      border:none; 
+      cursor:pointer; 
+      font-size:24px;
+      box-shadow:0 4px 12px rgba(18, 17, 16, 0.3);
+      z-index:999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    ">
+        💬
+    </button>
+
     <script>
         function goTo(page) {
             window.location.href = `${location.origin}${location.pathname.replace(
@@ -342,7 +381,6 @@
         const demoFrame = document.querySelector(".demo-frame");
         if (demoFrame) {
             setInterval(() => {
-                // This would cycle through demo screenshots in a real implementation
                 demoFrame.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100
                     }%`;
             }, 3000);
@@ -355,14 +393,17 @@
             hamburger.addEventListener("click", () => {
                 navLinks.classList.toggle("active");
             });
+
+            // Chatbot toggle functionality
+            document.getElementById("chatbot-button").addEventListener("click", function () {
+                const container = document.getElementById("chatbot-container");
+                container.style.display = container.style.display === "none" ? "block" : "none";
+            });
         });
 
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                // Save login in session/local storage if needed
                 localStorage.setItem("userLoggedIn", "true");
-
-                // Modify the Get Started button to redirect to dashboard
                 const btn = document.getElementById("getStartedBtn");
                 if (btn) {
                     btn.onclick = () => {
@@ -373,6 +414,11 @@
                 localStorage.removeItem("userLoggedIn");
             }
         });
+
+        // Optional: Auto-open chatbot after 5 seconds
+        setTimeout(() => {
+            document.getElementById("chatbot-container").style.display = "block";
+        }, 5000);
     </script>
 </body>
 
