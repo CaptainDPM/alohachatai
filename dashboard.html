@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Business Dashboard</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">SmartChatAI</div>
+        <div class="nav-links">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="upgrade.html">Upgrade</a>
+          <a href="#" id="logout-btn">Logout</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container dashboard-wrapper">
     <section class="dashboard-section">
       <h1>Welcome, <span id="business-name">Loading...</span></h1>
       <p>Email: <span id="business-email"></span></p>
@@ -14,71 +30,73 @@
       <p>Messages Left: <strong id="message-count">Loading...</strong></p>
 
       <div class="actions">
-        <button id="upgrade-btn">Upgrade Plan</button>
-        <button id="buy-msgs-btn">Buy More Messages</button>
-        <button id="logout-btn">Logout</button>
+        <button id="upgrade-btn" class="cta-button">Upgrade Plan</button>
+        <button id="buy-msgs-btn" class="secondary-button">Buy More Messages</button>
+        <button id="logout-btn" class="danger-button">Logout</button>
       </div>
     </section>
+  </main>
 
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
-    <script>
-      function goTo(page) {
-        window.location.href = `${location.origin}${location.pathname.replace(
-          /[^/]*$/,
-          ""
-        )}${page}`;
+  <script>
+    function goTo(page) {
+      window.location.href = `${location.origin}${location.pathname.replace(
+        /[^/]*$/,
+        ""
+      )}${page}`;
+    }
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
+      authDomain: "chatbot-8cc09.firebaseapp.com",
+      projectId: "chatbot-8cc09",
+      storageBucket: "chatbot-8cc09.firebasestorage.app",
+      messagingSenderId: "362283614085",
+      appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+      measurementId: "G-MWYVYVSGHE",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        goTo("signup-login.html");
+        return;
       }
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
-        authDomain: "chatbot-8cc09.firebaseapp.com",
-        projectId: "chatbot-8cc09",
-        storageBucket: "chatbot-8cc09.firebasestorage.app",
-        messagingSenderId: "362283614085",
-        appId: "1:362283614085:web:146160adf6b5d2b198ceec",
-        measurementId: "G-MWYVYVSGHE",
-      };
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db = firebase.firestore();
+      const uid = user.uid;
+      try {
+        const doc = await db.collection("businesses").doc(uid).get();
+        const data = doc.data();
 
-      auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-          goTo("signup-login.html");
-          return;
-        }
+        document.getElementById("business-name").textContent =
+          data.name || "Business";
+        document.getElementById("business-email").textContent = data.email;
+        document.getElementById("current-plan").textContent =
+          data.plan || "None";
+        document.getElementById("message-count").textContent =
+          data.messagesLeft ?? "0";
+      } catch (err) {
+        console.error("Error loading dashboard:", err);
+      }
+    });
 
-        const uid = user.uid;
-        try {
-          const doc = await db.collection("businesses").doc(uid).get();
-          const data = doc.data();
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      auth.signOut().then(() => goTo("signup-login.html"));
+    });
 
-          document.getElementById("business-name").textContent =
-            data.name || "Business";
-          document.getElementById("business-email").textContent = data.email;
-          document.getElementById("current-plan").textContent =
-            data.plan || "None";
-          document.getElementById("message-count").textContent =
-            data.messagesLeft ?? "0";
-        } catch (err) {
-          console.error("Error loading dashboard:", err);
-        }
-      });
+    document.getElementById("upgrade-btn").addEventListener("click", () => {
+      goTo("upgrade.html");
+    });
 
-      document.getElementById("logout-btn").addEventListener("click", () => {
-        auth.signOut().then(() => goTo("signup-login.html"));
-      });
+    document.getElementById("buy-msgs-btn").addEventListener("click", () => {
+      goTo("buy-messages.html");
+    });
+  </script>
+</body>
 
-      document.getElementById("upgrade-btn").addEventListener("click", () => {
-        goTo("upgrade.html");
-      });
-
-      document.getElementById("buy-msgs-btn").addEventListener("click", () => {
-        goTo("buy-messages.html");
-      });
-    </script>
-  </body>
 </html>
