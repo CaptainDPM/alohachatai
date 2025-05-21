@@ -52,6 +52,7 @@
         formTitle.textContent = isSignUp ? "Sign Up" : "Login";
         toggleLink.textContent = isSignUp ? "Log in" : "Sign up";
         nameField.style.display = isSignUp ? "block" : "none";
+        nameField.required = isSignUp;
         authForm.querySelector("button").textContent = isSignUp
           ? "Create Account"
           : "Login";
