@@ -1,163 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chatbot Admin</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbot Admin</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon" />
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  </head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 
-  <body class="auth-body">
-    <div class="auth-container">
-      <h1 class="auth-title">Chatbot Configuration</h1>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
 
-      <!-- Business Info -->
-      <div class="form-section">
-        <h3 class="form-section-title">Business Information</h3>
-        <div class="form-group">
-          <label class="form-label">Business Name</label>
-        </div>
-        <input
-          type="text"
-          id="businessName"
-          class="form-input"
-          placeholder="e.g. Aloha Dental"
-        />
-        <input
-          type="url"
-          id="websiteUrl"
-          class="form-input"
-          placeholder="https://yourclinic.com"
-        />
+<body class="auth-body">
+  <div class="auth-container">
+    <h1 class="auth-title">Chatbot Configuration</h1>
+
+    <!-- Business Info -->
+    <div class="form-section">
+      <h3 class="form-section-title">Business Information</h3>
+      <div class="form-group">
+        <label class="form-label">Business Name</label>
       </div>
-
-      <!-- Booking -->
-      <div class="form-section">
-        <h3 class="form-section-title">Booking System</h3>
-        <select id="bookingType" class="form-input">
-          <option value="none">No booking system</option>
-          <option value="booker">Booker</option>
-          <option value="dentrix">Dentrix</option>
-        </select>
-        <input
-          type="url"
-          id="bookingUrl"
-          class="form-input"
-          placeholder="Booking page URL"
-          style="display: none"
-        />
-      </div>
-
-      <!-- FAQs -->
-      <div class="form-section">
-        <h3 class="form-section-title">Frequently Asked Questions</h3>
-        <p class="subtext">Add common questions and answers (one per line):</p>
-        <textarea
-          id="faqs"
-          class="form-textarea"
-          placeholder="Q: What's your cancellation policy?&#10;A: 24 hours notice required..."
-        ></textarea>
-      </div>
-
-      <!-- Save Button -->
-      <button class="primary-btn" onclick="saveConfig()">
-        💾 Save Configuration
-      </button>
-      <div id="status" class="form-status"></div>
+      <input type="text" id="businessName" class="form-input" placeholder="e.g. Aloha Dental" />
+      <input type="url" id="websiteUrl" class="form-input" placeholder="https://yourclinic.com" />
     </div>
 
-    <!-- JavaScript Section -->
-    <script>
-      // Firebase Setup
-      const firebaseConfig = {
-        apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
-        authDomain: "chatbot-8cc09.firebaseapp.com",
-        projectId: "chatbot-8cc09",
-        storageBucket: "chatbot-8cc09.appspot.com",
-        messagingSenderId: "362283614085",
-        appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+    <!-- Booking -->
+    <div class="form-section">
+      <h3 class="form-section-title">Booking System</h3>
+      <select id="bookingType" class="form-input">
+        <option value="none">No booking system</option>
+        <option value="booker">Booker</option>
+        <option value="dentrix">Dentrix</option>
+      </select>
+      <input type="url" id="bookingUrl" class="form-input" placeholder="Booking page URL" style="display: none" />
+    </div>
+
+    <!-- FAQs -->
+    <div class="form-section">
+      <h3 class="form-section-title">Frequently Asked Questions</h3>
+      <p class="subtext">Add common questions and answers (one per line):</p>
+      <textarea id="faqs" class="form-textarea"
+        placeholder="Q: What's your cancellation policy?&#10;A: 24 hours notice required..."></textarea>
+    </div>
+
+    <!-- Save Button -->
+    <button class="primary-btn" onclick="saveConfig()">
+      💾 Save Configuration
+    </button>
+    <div id="status" class="form-status"></div>
+  </div>
+
+  <!-- JavaScript Section -->
+  <script>
+    // Firebase Setup
+    const firebaseConfig = {
+      apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
+      authDomain: "chatbot-8cc09.firebaseapp.com",
+      projectId: "chatbot-8cc09",
+      storageBucket: "chatbot-8cc09.appspot.com",
+      messagingSenderId: "362283614085",
+      appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    db.collection("test")
+      .doc("connection")
+      .set({ test: true })
+      .then(() => console.log("Firestore connected"))
+      .catch((err) => console.error("Firestore error:", err));
+
+    // Booking URL toggle
+    document.getElementById("bookingType").addEventListener("change", (e) => {
+      document.getElementById("bookingUrl").style.display =
+        e.target.value === "none" ? "none" : "block";
+    });
+
+    async function saveConfig() {
+      const config = {
+        name: document.getElementById("businessName").value,
+        websiteUrl: document.getElementById("websiteUrl").value,
+        booking: {
+          type: document.getElementById("bookingType").value,
+          url: document.getElementById("bookingUrl").value,
+        },
+        faqs: document.getElementById("faqs").value.split("\n"),
       };
-      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
 
-      db.collection("test")
-        .doc("connection")
-        .set({ test: true })
-        .then(() => console.log("Firestore connected"))
-        .catch((err) => console.error("Firestore error:", err));
+      try {
+        await db.collection("business_configs").doc(config.name).set(config);
 
-      // Booking URL toggle
-      document.getElementById("bookingType").addEventListener("change", (e) => {
-        document.getElementById("bookingUrl").style.display =
-          e.target.value === "none" ? "none" : "block";
-      });
+        // Cache locally
+        localStorage.setItem(
+          "chatbotConfig",
+          JSON.stringify({
+            ...config,
+            lastUpdated: Date.now(),
+          })
+        );
 
-      async function saveConfig() {
-        const config = {
-          name: document.getElementById("businessName").value,
-          websiteUrl: document.getElementById("websiteUrl").value,
-          booking: {
-            type: document.getElementById("bookingType").value,
-            url: document.getElementById("bookingUrl").value,
-          },
-          faqs: document.getElementById("faqs").value.split("\n"),
-        };
-
-        try {
-          await db.collection("business_configs").doc(config.name).set(config);
-
-          // Cache locally
-          localStorage.setItem(
-            "chatbotConfig",
-            JSON.stringify({
-              ...config,
-              lastUpdated: Date.now(),
-            })
-          );
-
-          document.getElementById("status").textContent =
-            "Configuration saved successfully!";
-          document.getElementById("testSection").style.display = "block";
-          console.log("Configuration saved to Firestore");
-        } catch (err) {
-          console.error("Firestore save error:", err);
-          alert(
-            "Failed to save configuration. Please check console for details."
-          );
-        }
+        document.getElementById("status").textContent =
+          "Configuration saved successfully!";
+        document.getElementById("testSection").style.display = "block";
+        console.log("Configuration saved to Firestore");
+      } catch (err) {
+        console.error("Firestore save error:", err);
+        alert(
+          "Failed to save configuration. Please check console for details."
+        );
       }
+    }
 
-      // Load saved config on page load
-      window.addEventListener("DOMContentLoaded", () => {
-        const savedConfig = localStorage.getItem("chatbotConfig");
-        if (savedConfig) {
-          const config = JSON.parse(savedConfig);
-          if (config.name)
-            document.getElementById("businessName").value = config.name;
-          if (config.websiteUrl)
-            document.getElementById("websiteUrl").value = config.websiteUrl;
-          if (config.booking) {
-            document.getElementById("bookingType").value =
-              config.booking.type || "none";
-            document.getElementById("bookingUrl").value =
-              config.booking.url || "";
-            document.getElementById("bookingUrl").style.display =
-              config.booking.type && config.booking.type !== "none"
-                ? "block"
-                : "none";
-          }
-          if (config.faqs)
-            document.getElementById("faqs").value = config.faqs.join("\n");
+    // Load saved config on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedConfig = localStorage.getItem("chatbotConfig");
+      if (savedConfig) {
+        const config = JSON.parse(savedConfig);
+        if (config.name)
+          document.getElementById("businessName").value = config.name;
+        if (config.websiteUrl)
+          document.getElementById("websiteUrl").value = config.websiteUrl;
+        if (config.booking) {
+          document.getElementById("bookingType").value =
+            config.booking.type || "none";
+          document.getElementById("bookingUrl").value =
+            config.booking.url || "";
+          document.getElementById("bookingUrl").style.display =
+            config.booking.type && config.booking.type !== "none"
+              ? "block"
+              : "none";
         }
-      });
-    </script>
-  </body>
+        if (config.faqs)
+          document.getElementById("faqs").value = config.faqs.join("\n");
+      }
+    });
+  </script>
+</body>
+
 </html>
