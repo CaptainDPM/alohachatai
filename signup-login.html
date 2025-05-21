@@ -109,7 +109,7 @@
       // Auto-redirect if already logged in
       auth.onAuthStateChanged((user) => {
         if (user) {
-          goto("dashboard.html");
+          goTo("dashboard.html");
         }
       });
     </script>
