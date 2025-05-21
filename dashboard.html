@@ -231,11 +231,30 @@
 
         const uid = user.uid;
         try {
-          const doc = await db.collection("businesses").doc(uid).get();
-          const data = doc.data();
+          const docRef = db.collection("businesses").doc(user.uid);
+          console.log("Document reference:", docRef); // Debug: Log document reference
 
-          // Update the welcome message
-          const businessName = data.name || "Business"; // Fallback to "Business" if name doesn't exist
+          const doc = await docRef.get();
+
+          if (!doc.exists) {
+            console.error("No document found for this user!");
+            document.getElementById("business-name").textContent =
+              "Business (No profile)";
+            return;
+          }
+
+          const data = doc.data();
+          console.log("Document data:", data); // Debug: Log all document data
+
+          // Debug: Check if name exists
+          if (!data.name) {
+            console.warn("No 'name' field found in document");
+            console.warn("Available fields:", Object.keys(data));
+          }
+
+          // Update the welcome message - using nullish coalescing for better fallback
+          const businessName = data.name ?? "Business";
+          console.log("Setting business name to:", businessName); // Debug
           document.getElementById("business-name").textContent = businessName;
 
           // Update the rest of the dashboard data
