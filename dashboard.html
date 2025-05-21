@@ -253,7 +253,7 @@
           }
 
           // Update the welcome message - using nullish coalescing for better fallback
-          const businessName = data.name ?? "Business";
+          const businessName = data.name;
           console.log("Setting business name to:", businessName); // Debug
           document.getElementById("business-name").textContent = businessName;
 
