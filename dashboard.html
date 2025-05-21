@@ -308,8 +308,6 @@
             nextMonth.toLocaleString("default", { month: "long" });
         } catch (err) {
           console.error("Error loading dashboard:", err);
-          // Fallback welcome message if there's an error
-          document.getElementById("business-name").textContent = "Business";
         }
       });
 
