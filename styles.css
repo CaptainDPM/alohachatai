@@ -206,7 +206,7 @@ select {
 }
 
 #logout-btn {
-  color: black;
+  color: var(--dark);
 }
 
 #logout-btn:hover {
