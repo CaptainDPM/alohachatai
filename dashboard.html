@@ -222,6 +222,7 @@
         },
       };
 
+      // Update this part in your dashboard HTML file's script section
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
           goTo("signup-login.html");
@@ -233,15 +234,19 @@
           const doc = await db.collection("businesses").doc(uid).get();
           const data = doc.data();
 
-          // Update basic info
-          document.getElementById("business-name").textContent =
-            data.name || "Business";
+          // Update the welcome message
+          const businessName = data.name || "Business"; // Fallback to "Business" if name doesn't exist
+          document.getElementById("business-name").textContent = businessName;
+
+          // Update the rest of the dashboard data
+          document.getElementById("business-email").textContent =
+            data.email || "Not provided";
 
           // Update plan info
           const plan = data.plan || "none";
           const planData = planDetails[plan] || planDetails["none"];
           document.getElementById("current-plan").textContent = planData.name;
-          document.getElementById("plan-details").textContent = planData.desc;
+          document.getElementById("plan-desc").textContent = planData.desc;
 
           // Update message counts
           const messagesLeft = data.messagesLeft ?? 0;
@@ -253,7 +258,7 @@
           document.getElementById("message-count").textContent = messagesLeft;
           document.getElementById("messages-used").textContent = messagesUsed;
 
-          // Update usage bar and values
+          // Update usage bar
           if (planData.limit > 0) {
             const usagePercent = (messagesUsed / planData.limit) * 100;
             document.getElementById(
@@ -263,19 +268,14 @@
             document.getElementById("remaining-value").textContent =
               messagesLeft;
             document.getElementById("total-value").textContent = planData.limit;
-          } else {
-            document.getElementById("usage-bar").style.width = "0%";
-            document.getElementById("used-value").textContent = "0";
-            document.getElementById("remaining-value").textContent = "0";
-            document.getElementById("total-value").textContent = "0";
           }
 
-          // Show low message alert if less than 20% remaining
+          // Show low message alert if needed
           if (messagesLeft / planData.limit < 0.2 && planData.limit > 0) {
             document.getElementById("low-message-alert").style.display = "flex";
           }
 
-          // Set billing cycle date (sample - you would use your actual billing cycle logic)
+          // Set billing cycle date (you'll need to replace this with your actual billing cycle logic)
           const today = new Date();
           const nextMonth = new Date(
             today.getFullYear(),
@@ -289,6 +289,8 @@
             nextMonth.toLocaleString("default", { month: "long" });
         } catch (err) {
           console.error("Error loading dashboard:", err);
+          // Fallback welcome message if there's an error
+          document.getElementById("business-name").textContent = "Business";
         }
       });
 
