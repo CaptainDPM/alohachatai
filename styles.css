@@ -1027,13 +1027,12 @@ footer {
 
 .pricing-section {
   padding: 2rem 0;
-  margin-top: 80px;
-  /* Account for fixed header */
 }
 
 .section-header {
   text-align: center;
   margin-bottom: 2rem;
+  margin-top: 80px;
 }
 
 .section-header h1 {
