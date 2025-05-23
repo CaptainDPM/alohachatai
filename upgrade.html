@@ -230,6 +230,7 @@
         const stripe = Stripe('pk_test_51RRjwwINpKyitcVpMbJTcKhHKX8iaTRZ4dWnD5fyeTmDefmuP6sgRbE7LlP3TPBHX5swOyocD4XdPpNOs0v4BRqH00vB7dE9c9');
         let elements;
         let cardElement;
+        let currentPlan;
 
         // Plan data
         const plans = {
@@ -377,83 +378,73 @@
                 }
             });
 
+            // Handle form submission
+            document.getElementById("submit-payment").addEventListener("click", handlePayment);
+        }
+
+        async function handlePayment() {
+            const submitButton = document.getElementById("submit-payment");
+            submitButton.disabled = true;
+            submitButton.textContent = "Processing...";
+
             try {
                 // Create payment intent on your server
-                const response = await fetch('https://v7r71gqp7k.execute-api.us-east-1.amazonaws.com/default/Chatbot-Payment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${await auth.currentUser.getIdToken()}`
-                    },
-                    body: JSON.stringify({
-                        plan: currentPlan,
-                        userId: auth.currentUser.uid
-                    })
-                });
-
-                async function handlePayment() {
-                    const submitButton = document.getElementById("submit-payment");
-                    submitButton.disabled = true;
-                    submitButton.textContent = "Processing...";
-
-                    try {
-                        // Create payment intent on your server
-                        const response = await fetch(
-                            "https://your-server.com/create-subscription",
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
-                                },
-                                body: JSON.stringify({
-                                    plan: currentPlan,
-                                    userId: auth.currentUser.uid,
-                                }),
-                            }
-                        );
-
-                        const { clientSecret } = await response.json();
-
-                        // Confirm payment with Stripe
-                        const { error, paymentIntent } = await stripe.confirmCardPayment(
-                            clientSecret,
-                            {
-                                payment_method: {
-                                    card: cardElement,
-                                },
-                            }
-                        );
-
-                        if (error) {
-                            document.getElementById("card-errors").textContent = error.message;
-                            submitButton.disabled = false;
-                            submitButton.textContent = "Subscribe Now";
-                        } else {
-                            // Payment successful - update Firestore
-                            await db
-                                .collection("businesses")
-                                .doc(auth.currentUser.uid)
-                                .update({
-                                    plan: currentPlan.split("-")[0], // e.g. 'professional'
-                                    messagesLeft: plans[currentPlan].messages,
-                                    billingCycle: plans[currentPlan].interval,
-                                    lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
-                                });
-
-                            // Show success message
-                            alert("Payment successful! Your plan has been updated.");
-                            closeModal();
-                            window.location.href = "dashboard.html";
-                        }
-                    } catch (error) {
-                        console.error("Payment error:", error);
-                        document.getElementById("card-errors").textContent =
-                            "An error occurred. Please try again.";
-                        submitButton.disabled = false;
-                        submitButton.textContent = "Subscribe Now";
+                const response = await fetch(
+                    "https://v7r71gqp7k.execute-api.us-east-1.amazonaws.com/default/Chatbot-Payment",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
+                        },
+                        body: JSON.stringify({
+                            plan: currentPlan,
+                            userId: auth.currentUser.uid,
+                        }),
                     }
+                );
+
+                const { clientSecret } = await response.json();
+
+                // Confirm payment with Stripe
+                const { error, paymentIntent } = await stripe.confirmCardPayment(
+                    clientSecret,
+                    {
+                        payment_method: {
+                            card: cardElement,
+                        },
+                    }
+                );
+
+                if (error) {
+                    document.getElementById("card-errors").textContent = error.message;
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Subscribe Now";
+                } else {
+                    // Payment successful - update Firestore
+                    await db
+                        .collection("businesses")
+                        .doc(auth.currentUser.uid)
+                        .update({
+                            plan: currentPlan.split("-")[0], // e.g. 'professional'
+                            messagesLeft: plans[currentPlan].messages,
+                            billingCycle: plans[currentPlan].interval,
+                            lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+
+                    // Show success message
+                    alert("Payment successful! Your plan has been updated.");
+                    closeModal();
+                    window.location.href = "dashboard.html";
                 }
+            } catch (error) {
+                console.error("Payment error:", error);
+                document.getElementById("card-errors").textContent =
+                    "An error occurred. Please try again.";
+                submitButton.disabled = false;
+                submitButton.textContent = "Subscribe Now";
+            }
+        }
     </script>
 </body>
 
