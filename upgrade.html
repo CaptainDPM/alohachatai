@@ -354,6 +354,7 @@
             ? currentPlan.replace("monthly", "annual")
             : currentPlan.replace("annual", "monthly");
           button.dataset.plan = newPlan;
+          console.log("Updated plan button data-plan:", newPlan);
         });
       }
 
