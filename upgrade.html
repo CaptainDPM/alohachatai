@@ -256,6 +256,7 @@
           "professional-annual": "price_1RRoaNIRT7PI5JKEfhoQrihQ",
           "unlimited-annual": "price_1RRoahIRT7PI5JKEbhzdCVWs",
         };
+        console.log("Selected planId:", planId);
         return priceMap[planId];
       }
 
@@ -430,7 +431,7 @@
 
           // 2. Create a Checkout Session (not Payment Intent)
           const response = await fetch(
-            "https://v7r71gqp7k.execute-api.us-east-1.amazonaws.com/default/Chatbot-Payment",
+            "https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/",
             {
               method: "POST",
               headers: {
