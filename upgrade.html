@@ -436,7 +436,7 @@
                 Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
               },
               body: JSON.stringify({
-                priceId: priceId, // Send priceId instead of plan
+                priceId: getStripePriceId(planId),
                 userId: auth.currentUser.uid,
               }),
             }
