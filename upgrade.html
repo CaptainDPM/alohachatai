@@ -419,6 +419,7 @@
         try {
           // 1. Get the correct Stripe Price ID for the selected plan
           const priceId = getStripePriceId(currentPlan);
+          console.log("Attempting payment with priceId:", priceId);
 
           if (!priceId) {
             throw new Error(
@@ -436,8 +437,7 @@
                 Authorization: `Bearer ${await auth.currentUser.getIdToken()}`,
               },
               body: JSON.stringify({
-                priceId: getStripePriceId(planId),
-                userId: auth.currentUser.uid,
+                priceId,
               }),
             }
           );
@@ -449,12 +449,8 @@
             );
           }
 
-          const sessionData = await response.json();
-
-          // 3. Redirect to Stripe Checkout (simpler than confirmCardPayment)
-          const result = await stripe.redirectToCheckout({
-            sessionId: sessionData.sessionId,
-          });
+          const { sessionId } = await response.json();
+          const result = await stripe.redirectToCheckout({ sessionId });
 
           if (result.error) {
             throw result.error;
