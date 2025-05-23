@@ -439,8 +439,6 @@
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                // Only include Authorization if your backend checks it
-                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({ priceId }),
             }
