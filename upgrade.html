@@ -247,14 +247,17 @@
       let cardElement;
       let currentPlan;
 
-      const STRIPE_PRICE_IDS = {
-        "starter-monthly": "price_1RRoYoIRT7PI5JKEgGShAbH6",
-        "professional-monthly": "price_1RRoZBIRT7PI5JKEWqrGTLNi",
-        "unlimited-monthly": "price_1RRoZRIRT7PI5JKEdUJPE6mU",
-        "starter-annual": "price_1RRoa6IRT7PI5JKEc6tdsnCQ",
-        "professional-annual": "price_1RRoaNIRT7PI5JKEfhoQrihQ",
-        "unlimited-annual": "price_1RRoahIRT7PI5JKEbhzdCVWs",
-      };
+      function getStripePriceId(planId) {
+        const priceMap = {
+          "starter-monthly": "price_1RRoYoIRT7PI5JKEgGShAbH6",
+          "professional-monthly": "price_1RRoZBIRT7PI5JKEWqrGTLNi",
+          "unlimited-monthly": "price_1RRoZRIRT7PI5JKEdUJPE6mU",
+          "starter-annual": "price_1RRoa6IRT7PI5JKEc6tdsnCQ",
+          "professional-annual": "price_1RRoaNIRT7PI5JKEfhoQrihQ",
+          "unlimited-annual": "price_1RRoahIRT7PI5JKEbhzdCVWs",
+        };
+        return priceMap[planId];
+      }
 
       // Plan data
       const plans = {
