@@ -249,12 +249,12 @@
 
       function getStripePriceId(planId) {
         const priceMap = {
-          "starter-monthly":"price_1RRrK4IRT7PI5JKEpButkCVf",
-          "professional-monthly":"price_1RRoZBIRT7PI5JKEWqrGTLNi",
-          "unlimited-monthly":"price_1RRoZRIRT7PI5JKEdUJPE6mU",
-          "starter-annual":"price_1RRoa6IRT7PI5JKEc6tdsnCQ",
-          "professional-annual":"price_1RRoaNIRT7PI5JKEfhoQrihQ",
-          "unlimited-annual":"price_1RRoahIRT7PI5JKEbhzdCVWs",
+          "starter-monthly": "price_1RRrK4IRT7PI5JKEpButkCVf",
+          "professional-monthly": "price_1RRoZBIRT7PI5JKEWqrGTLNi",
+          "unlimited-monthly": "price_1RRoZRIRT7PI5JKEdUJPE6mU",
+          "starter-annual": "price_1RRoa6IRT7PI5JKEc6tdsnCQ",
+          "professional-annual": "price_1RRoaNIRT7PI5JKEfhoQrihQ",
+          "unlimited-annual": "price_1RRoahIRT7PI5JKEbhzdCVWs",
         };
         console.log("Selected planId:", planId);
         return priceMap[planId];
@@ -419,7 +419,7 @@
         submitButton.textContent = "Processing...";
 
         try {
-          // 1. Get the correct Stripe Price ID for the selected plan
+          // 1. Get the Stripe price ID for selected plan
           const priceId = getStripePriceId(currentPlan);
           console.log("Attempting payment with priceId:", priceId);
 
@@ -429,37 +429,20 @@
             );
           }
 
-          // 2. Create a Checkout Session (not Payment Intent)
+          // 2. Get Firebase Auth token if needed
           const token = await auth.currentUser.getIdToken();
 
-          try {
-            const preflightResponse = await fetch(
-              "https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/",
-              {
-                method: "OPTIONS",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-            console.log("Preflight response:", preflightResponse);
-          } catch (preflightError) {
-            console.error("Preflight error:", preflightError);
-          }
-
+          // 3. Send POST request to your Lambda function to create Stripe Checkout Session
           const response = await fetch(
             "https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                // Only include Authorization if your backend checks it
                 Authorization: `Bearer ${token}`,
               },
-              body: JSON.stringify({
-                priceId,
-              }),
+              body: JSON.stringify({ priceId }),
             }
           );
 
@@ -471,12 +454,14 @@
           }
 
           const { sessionId } = await response.json();
-          const result = await stripe.redirectToCheckout({ sessionId });
 
+          // 4. Redirect to Stripe Checkout
+          const result = await stripe.redirectToCheckout({ sessionId });
           if (result.error) {
             throw result.error;
           }
 
+          // 5. Optionally update Firestore after successful redirect (can be done on success page too)
           await db
             .collection("businesses")
             .doc(auth.currentUser.uid)
