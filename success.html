@@ -174,12 +174,14 @@
             const paymentStatus = session.payment_status || 'paid';
             const paymentDate = new Date(session.created * 1000).toLocaleDateString();
 
+            const shortId = session.id ? `${session.id.substring(8, 18)}...${session.id.substring(session.id.length - 4)}` : '';
+
             orderInfo.innerHTML = `
         <p><strong>Plan:</strong> ${planName}</p>
         <p><strong>Amount:</strong> ${currency} ${amount}</p>
         <p><strong>Status:</strong> ${paymentStatus}</p>
         <p><strong>Date:</strong> ${paymentDate}</p>
-        <p><strong>Order ID:</strong> ${session.id}</p>
+        <p><strong>Order ID:</strong> ${shortId}</p>
       `;
         }
     </script>
