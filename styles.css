@@ -279,6 +279,7 @@ nav {
   padding: 10px 20px;
   border-radius: 30px;
   font-weight: 600;
+  font-size: medium;
   cursor: pointer;
   transition: all 0.3s;
 }
