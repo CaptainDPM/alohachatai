@@ -166,15 +166,20 @@
 
         function displayOrderDetails(session) {
             const orderInfo = document.getElementById('order-info');
-            const planName = session.display_items[0].plan.nickname || 'Premium Plan';
+            const planName = session.metadata?.plan_id?.split('-')[0] ||
+                session.line_items?.data[0]?.price?.product?.name ||
+                'Premium Plan';
             const amount = (session.amount_total / 100).toFixed(2);
-            const currency = session.currency.toUpperCase();
+            const currency = session.currency.toUpperCase() || 'USD';
+            const paymentStatus = session.payment_status || 'paid';
+            const paymentDate = new Date(session.created * 1000).toLocaleDateString();
 
             orderInfo.innerHTML = `
         <p><strong>Plan:</strong> ${planName}</p>
         <p><strong>Amount:</strong> ${currency} ${amount}</p>
-        <p><strong>Status:</strong> Paid</p>
-        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+        <p><strong>Status:</strong> ${paymentStatus}</p>
+        <p><strong>Date:</strong> ${paymentDate}</p>
+        <p><strong>Order ID:</strong> ${session.id}</p>
       `;
         }
     </script>
