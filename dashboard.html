@@ -91,8 +91,8 @@
             <span class="stat-card-title">Current Plan</span>
             <div class="stat-card-icon">📊</div>
           </div>
-          <div class="stat-card-value" id="current-plan">None</div>
-          <p class="stat-card-desc" id="plan-details">No active subscription</p>
+          <div class="stat-card-value" id="current-plan">Loading...</div>
+          <p class="stat-card-desc" id="plan-desc">Loading plan details...</p>
         </div>
       </div>
 
@@ -244,94 +244,89 @@
 
         const uid = user.uid;
         try {
-          const docRef = db.collection("businesses").doc(user.uid);
-          console.log("Document reference:", docRef); // Debug: Log document reference
-
+          const docRef = db.collection("businesses").doc(uid);
           const doc = await docRef.get();
 
           if (!doc.exists) {
             console.error("No document found for this user!");
-            document.getElementById("business-name").textContent =
-              "Business (No profile)";
+            document.getElementById("business-name").textContent = "Business";
             return;
           }
 
           const data = doc.data();
-          console.log("Document data:", data); // Debug: Log all document data
+          console.log("Loaded Firestore data:", data);
 
-          // Debug: Check if name exists
-          if (!data.name) {
-            console.warn("No 'name' field found in document");
-            console.warn("Available fields:", Object.keys(data));
-          }
+          // Update business name
+          document.getElementById("business-name").textContent =
+            data.name || "Business";
 
-          // Update the welcome message - using nullish coalescing for better fallback
-          const businessName = data.name;
-          console.log("Setting business name to:", businessName); // Debug
-          document.getElementById("business-name").textContent = businessName;
-
-          // Update the rest of the dashboard data
-          document.getElementById("business-email").textContent =
-            data.email || "Not provided";
-
-          // Update plan info - replace this section in your existing code
-          const plan = data.plan || "none";
-          const planData =
-            planDetails[plan.toLowerCase()] || planDetails["none"]; // Make case-insensitive
-
+          // Update plan info - handle case sensitivity
+          const planName = data.plan ? data.plan.toLowerCase() : "none";
           document.getElementById("current-plan").textContent = data.plan
-            ? data.plan.charAt(0).toUpperCase() + data.plan.slice(1)
+            ? formatPlanName(data.plan)
             : "None";
-          document.getElementById("plan-details").textContent =
-            planData.desc || "No active subscription";
 
-          // Update message counts based on actual Firestore data
-          const messagesLeft = data.messagesLeft ?? 0;
-          const messagesUsed = data.messagesUsed ?? 0; // Add this field to Firestore if needed
-          const totalMessages =
-            planData.limit > 0 ? planData.limit : messagesLeft + messagesUsed;
-
-          document.getElementById("message-count").textContent = messagesLeft;
-          document.getElementById("messages-used").textContent = messagesUsed;
-
-          // Update usage bar
-          if (planData.limit === -1) {
-            document.getElementById("usage-bar").style.width = "0%";
-            document.getElementById("used-value").textContent = messagesUsed;
+          // Update plan description based on messagesLeft
+          const messagesLeft = data.messagesLeft || 0;
+          if (messagesLeft === -1) {
+            document.getElementById("plan-desc").textContent =
+              "Unlimited messages";
             document.getElementById("remaining-value").textContent = "∞";
             document.getElementById("total-value").textContent = "Unlimited";
-          } else if (totalMessages > 0) {
-            const usagePercent = (messagesUsed / totalMessages) * 100;
+            document.getElementById("usage-bar").style.width = "0%";
+          } else {
+            const planLimit = getPlanLimit(planName);
+            document.getElementById(
+              "plan-desc"
+            ).textContent = `${messagesLeft} messages remaining of ${planLimit}`;
+            document.getElementById("remaining-value").textContent =
+              messagesLeft;
+            document.getElementById("total-value").textContent = planLimit;
+
+            // Calculate usage percentage
+            const messagesUsed = planLimit - messagesLeft;
+            document.getElementById("used-value").textContent =
+              messagesUsed > 0 ? messagesUsed : 0;
+            const usagePercent =
+              messagesUsed > 0 ? (messagesUsed / planLimit) * 100 : 0;
             document.getElementById(
               "usage-bar"
             ).style.width = `${usagePercent}%`;
-            document.getElementById("used-value").textContent = messagesUsed;
-            document.getElementById("remaining-value").textContent =
-              messagesLeft;
-            document.getElementById("total-value").textContent = totalMessages;
           }
 
-          // Show low message alert if needed
-          if (planData.limit !== -1 && messagesLeft / totalMessages < 0.2) {
+          // Update messages count display
+          document.getElementById("message-count").textContent =
+            messagesLeft === -1 ? "∞" : messagesLeft;
+          document.getElementById("messages-used").textContent =
+            data.messagesUsed || 0;
+
+          // Show/hide low message alert (not for unlimited plans)
+          if (messagesLeft !== -1 && messagesLeft < 50) {
             document.getElementById("low-message-alert").style.display = "flex";
           }
-
-          // Set billing cycle date
-          const today = new Date();
-          const nextMonth = new Date(
-            today.getFullYear(),
-            today.getMonth() + 1,
-            1
-          );
-          document.getElementById("billing-cycle").textContent =
-            nextMonth.getDate() +
-            getOrdinalSuffix(nextMonth.getDate()) +
-            " " +
-            nextMonth.toLocaleString("default", { month: "long" });
         } catch (err) {
           console.error("Error loading dashboard:", err);
+          // Fallback display if errors occur
+          document.getElementById("current-plan").textContent = "Error";
+          document.getElementById("plan-desc").textContent =
+            "Could not load plan details";
         }
       });
+
+      // Helper functions
+      function formatPlanName(plan) {
+        return plan.charAt(0).toUpperCase() + plan.slice(1).toLowerCase();
+      }
+
+      function getPlanLimit(planName) {
+        const limits = {
+          free: 100,
+          starter: 250,
+          professional: 2000,
+          unlimited: -1,
+        };
+        return limits[planName.toLowerCase()] || 0;
+      }
 
       // Helper function for date ordinal suffixes
       function getOrdinalSuffix(day) {
