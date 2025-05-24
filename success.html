@@ -63,6 +63,45 @@
             measurementId: "G-MWYVYVSGHE",
         };
 
+        const plans = {
+            "starter-monthly": {
+                name: "Starter",
+                price: 4999,
+                interval: "month",
+                messages: 250,
+            },
+            "starter-annual": {
+                name: "Starter",
+                price: 47988,
+                interval: "year",
+                messages: 250,
+            },
+            "professional-monthly": {
+                name: "Professional",
+                price: 14999,
+                interval: "month",
+                messages: 2000,
+            },
+            "professional-annual": {
+                name: "Professional",
+                price: 143988,
+                interval: "year",
+                messages: 2000,
+            },
+            "unlimited-monthly": {
+                name: "Unlimited",
+                price: 19999,
+                interval: "month",
+                messages: -1,
+            }, // -1 for unlimited
+            "unlimited-annual": {
+                name: "Unlimited",
+                price: 191988,
+                interval: "year",
+                messages: -1,
+            },
+        };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -73,6 +112,7 @@
             auth.onAuthStateChanged((user) => {
                 if (!user) {
                     window.location.href = "signup-login.html";
+                    return;
                 }
             });
 
