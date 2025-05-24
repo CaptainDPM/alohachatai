@@ -312,7 +312,7 @@
           }
 
           // Show low message alert if needed
-          if (messagesLeft / planData.limit < 0.2 && planData.limit > 0) {
+          if (planData.limit !== -1 && messagesLeft / totalMessages < 0.2) {
             document.getElementById("low-message-alert").style.display = "flex";
           }
 
