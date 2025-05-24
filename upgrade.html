@@ -421,15 +421,15 @@
                 }
 
                 // 5. Optionally update Firestore after successful redirect (can be done on success page too)
-                await db
-                    .collection("businesses")
-                    .doc(auth.currentUser.uid)
-                    .update({
-                        plan: currentPlan.split("-")[0],
-                        messagesLeft: plans[currentPlan].messages,
-                        billingCycle: plans[currentPlan].interval,
-                        lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
-                    });
+                // await db
+                //     .collection("businesses")
+                //     .doc(auth.currentUser.uid)
+                //     .update({
+                //         plan: currentPlan.split("-")[0],
+                //         messagesLeft: plans[currentPlan].messages,
+                //         billingCycle: plans[currentPlan].interval,
+                //         lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
+                //     });
             } catch (error) {
                 console.error("Payment error:", error);
                 document.getElementById("card-errors").textContent =
