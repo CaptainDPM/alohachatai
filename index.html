@@ -47,10 +47,6 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://alohachatai.com" />
 
-    <!-- Favicon -->
-    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
       {
@@ -68,466 +64,11 @@
       }
     </script>
 
-    <title>AlohaChatAI - AI-Powered Business Chatbots</title>
-
-    <!-- Preload Critical Resources -->
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      as="style"
-    />
-    <link rel="preload" href="styles.css" as="style" />
-    <link
-      rel="preload"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      as="style"
-    />
-
-    <!-- CSS -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
-
-    <!-- Preconnect to important domains -->
-    <link rel="preconnect" href="https://www.google-analytics.com" />
-    <link rel="preconnect" href="https://www.gstatic.com" />
-  </head>
-
-  <body>
-    <!-- Header with semantic nav -->
-    <header role="banner">
-      <div class="container">
-        <nav aria-label="Main navigation">
-          <div class="logo" aria-label="AlohaChatAI logo">
-            <i class="fas fa-robot" aria-hidden="true"></i>
-            <span>AlohaChatAI</span>
-          </div>
-
-          <button
-            class="hamburger"
-            aria-label="Toggle menu"
-            aria-expanded="false"
-            onclick="toggleMenu()"
-          >
-            <i class="fas fa-bars" aria-hidden="true"></i>
-          </button>
-
-          <div class="nav-right">
-            <ul class="nav-links" id="navLinks" role="menubar">
-              <li role="none">
-                <a href="#features" role="menuitem">Features</a>
-              </li>
-              <li role="none">
-                <a href="#pricing" role="menuitem">Pricing</a>
-              </li>
-              <li role="none">
-                <a href="#testimonials" role="menuitem">Testimonials</a>
-              </li>
-              <li role="none"><a href="#demo" role="menuitem">Demo</a></li>
-            </ul>
-          </div>
-
-          <button
-            id="getStartedBtn"
-            class="cta-button"
-            onclick="location.href='signup-login.html'"
-            aria-label="Go to dashboard"
-          >
-            Dashboard
-          </button>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-      <!-- Hero Section -->
-      <section class="hero" aria-labelledby="hero-heading">
-        <div class="container">
-          <h1 id="hero-heading">
-            AI-Powered Chatbots That <span>Convert Visitors</span> Into
-            Customers
-          </h1>
-          <p>
-            Our intelligent assistants provide 24/7 personalized support,
-            answering questions and booking appointments - all while perfectly
-            representing your brand.
-          </p>
-          <div class="hero-buttons">
-            <a
-              href="signup-login.html"
-              class="cta-button"
-              aria-label="Start free trial"
-              >Start Free Trial</a
-            >
-            <button class="secondary-button" aria-label="Watch demo video">
-              Watch Demo
-            </button>
-          </div>
-          <div class="demo-container">
-            <div class="demo-frame">
-              <iframe
-                title="AlohaChatAI Demo Video"
-                width="100%"
-                height="100%"
-                src="https://youtube.com/embed/LSDMg8iaylA"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Features Section with semantic structure -->
-      <section
-        class="features"
-        id="features"
-        aria-labelledby="features-heading"
-      >
-        <div class="container">
-          <header class="section-title">
-            <h2 id="features-heading">Powerful Features</h2>
-            <p>
-              Everything you need to automate customer service while maintaining
-              a personal touch
-            </p>
-          </header>
-
-          <div class="features-grid">
-            <article class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-brain" aria-hidden="true"></i>
-              </div>
-              <h3>Business-Specific Knowledge</h3>
-              <p>
-                Each chatbot learns everything about your business - services,
-                hours, FAQs - and never gets confused with competitors.
-              </p>
-            </article>
-
-            <article class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-calendar-check" aria-hidden="true"></i>
-              </div>
-              <h3>Seamless Booking</h3>
-              <p>
-                Integrates with your calendar system to schedule appointments
-                directly through the chat interface.
-              </p>
-            </article>
-
-            <article class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-language" aria-hidden="true"></i>
-              </div>
-              <h3>Multilingual Support</h3>
-              <p>
-                Automatically serves customers in their preferred language
-                without additional setup.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Pricing Section -->
-      <section class="pricing" id="pricing" aria-labelledby="pricing-heading">
-        <div class="container">
-          <header class="section-title">
-            <h2 id="pricing-heading">Simple, Transparent Pricing</h2>
-            <p>Start small and scale as your business grows</p>
-          </header>
-
-          <div class="pricing-grid">
-            <article class="pricing-card">
-              <h3>Starter</h3>
-              <div class="price">$49.99<span>/month</span></div>
-              <ul class="pricing-features">
-                <li>Up to 250 conversations/mo</li>
-                <li>Basic knowledge base</li>
-                <li>Email support</li>
-                <li>Standard branding</li>
-                <li>Basic analytics</li>
-              </ul>
-              <a
-                href="signup-login.html?plan=starter"
-                class="secondary-button"
-                style="width: 100%"
-                aria-label="Get started with Starter plan"
-              >
-                Get Started
-              </a>
-            </article>
-
-            <article class="pricing-card popular">
-              <div class="popular-badge">Most Popular</div>
-              <h3>Professional</h3>
-              <div class="price">$149.99<span>/month</span></div>
-              <ul class="pricing-features">
-                <li>Up to 2,000 conversations/mo</li>
-                <li>Advanced knowledge base</li>
-                <li>Priority support</li>
-                <li>Full white-labeling</li>
-                <li>Booking integration</li>
-                <li>Advanced analytics</li>
-              </ul>
-              <a
-                href="signup-login.html?plan=professional"
-                class="cta-button"
-                style="width: 100%"
-                aria-label="Get started with Professional plan"
-              >
-                Get Started
-              </a>
-            </article>
-
-            <article class="pricing-card">
-              <h3>Unlimited</h3>
-              <div class="price">$199.99</div>
-              <ul class="pricing-features">
-                <li>Unlimited conversations</li>
-                <li>Custom AI training</li>
-                <li>24/7 dedicated support</li>
-                <li>API access</li>
-                <li>Multi-location support</li>
-                <li>Custom integrations</li>
-              </ul>
-              <a
-                href="signup-login.html?plan=unlimited"
-                class="secondary-button"
-                style="width: 100%"
-                aria-label="Get started with Unlimited plan"
-              >
-                Get Started
-              </a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials Section -->
-      <section
-        class="testimonials"
-        id="testimonials"
-        aria-labelledby="testimonials-heading"
-      >
-        <div class="container">
-          <header class="section-title">
-            <h2 id="testimonials-heading">Trusted by Businesses Worldwide</h2>
-            <p>Don't just take our word for it - hear from our customers</p>
-          </header>
-
-          <div class="testimonial-grid">
-            <article class="testimonial-card">
-              <blockquote class="testimonial-content">
-                <p>
-                  "AlohaChatAI reduced our customer service emails by 70% while
-                  actually improving our satisfaction scores. It's like having
-                  another full-time employee!"
-                </p>
-              </blockquote>
-              <div class="testimonial-author">
-                <img
-                  src="https://randomuser.me/api/portraits/women/45.jpg"
-                  alt="Sarah Johnson, CEO of Aloha Dental"
-                  width="60"
-                  height="60"
-                  loading="lazy"
-                />
-                <div class="author-info">
-                  <h4>Sarah Johnson</h4>
-                  <p>CEO, Aloha Dental</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="testimonial-card">
-              <blockquote class="testimonial-content">
-                <p>
-                  "The booking integration alone has paid for itself ten times
-                  over. Our appointment no-show rate dropped from 25% to just 8%
-                  thanks to the automated reminders."
-                </p>
-              </blockquote>
-              <div class="testimonial-author">
-                <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
-                  alt="Michael Thompson, Owner of Thompson Legal"
-                  width="60"
-                  height="60"
-                  loading="lazy"
-                />
-                <div class="author-info">
-                  <h4>Michael Thompson</h4>
-                  <p>Owner, Thompson Legal</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="testimonial-card">
-              <blockquote class="testimonial-content">
-                <p>
-                  "As a non-technical business owner, I was amazed at how easy
-                  it was to set up. The AI learned everything about our services
-                  just from our website."
-                </p>
-              </blockquote>
-              <div class="testimonial-author">
-                <img
-                  src="https://randomuser.me/api/portraits/women/68.jpg"
-                  alt="Lisa Martinez, Founder of Spa Serenity"
-                  width="60"
-                  height="60"
-                  loading="lazy"
-                />
-                <div class="author-info">
-                  <h4>Lisa Martinez</h4>
-                  <p>Founder, Spa Serenity</p>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA Section -->
-      <section class="cta-section" aria-labelledby="cta-heading">
-        <div class="container">
-          <h2 id="cta-heading">Ready to Transform Your Customer Service?</h2>
-          <p>
-            Join thousands of businesses using AlohaChatAI to provide instant,
-            accurate responses 24/7.
-          </p>
-          <a
-            href="signup-login.html"
-            class="cta-button"
-            style="padding: 15px 30px; font-size: 1.1rem"
-            aria-label="Start your 7 day free trial"
-          >
-            Start Your 7 Day Free Trial
-          </a>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer role="contentinfo">
-      <div class="container">
-        <div class="footer-grid">
-          <section class="footer-column">
-            <h2 class="visually-hidden">Company Information</h2>
-            <div class="logo" style="color: white; margin-bottom: 20px">
-              <i class="fas fa-robot" aria-hidden="true"></i>
-              <span>AlohaChatAI</span>
-            </div>
-            <p style="color: var(--light-gray); margin-bottom: 20px">
-              The most intelligent business assistant platform on the market.
-            </p>
-            <div class="social-links">
-              <a href="https://twitter.com/alohachatai" aria-label="Twitter"
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a
-                href="https://linkedin.com/company/alohachatai"
-                aria-label="LinkedIn"
-                ><i class="fab fa-linkedin"></i
-              ></a>
-              <a href="https://facebook.com/alohachatai" aria-label="Facebook"
-                ><i class="fab fa-facebook"></i
-              ></a>
-              <a href="https://instagram.com/alohachatai" aria-label="Instagram"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </div>
-          </section>
-
-          <section class="footer-column">
-            <h3>Product</h3>
-            <ul class="footer-links">
-              <li><a href="#features">Features</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="integrations.html">Integrations</a></li>
-              <li><a href="roadmap.html">Roadmap</a></li>
-            </ul>
-          </section>
-
-          <section class="footer-column">
-            <h3>Resources</h3>
-            <ul class="footer-links">
-              <li><a href="docs.html">Documentation</a></li>
-              <li><a href="api.html">API Reference</a></li>
-              <li><a href="help.html">Help Center</a></li>
-              <li><a href="community.html">Community</a></li>
-            </ul>
-          </section>
-
-          <section class="footer-column">
-            <h3>Company</h3>
-            <ul class="footer-links">
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="careers.html">Careers</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </section>
-        </div>
-
-        <div class="copyright">
-          <p>
-            &copy; 2025 AlohaChatAI. All rights reserved. |
-            <a href="privacy.html" style="color: var(--light-gray)"
-              >Privacy Policy</a
-            >
-            |
-            <a href="terms.html" style="color: var(--light-gray)"
-              >Terms of Service</a
-            >
-          </p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Chatbot Widget -->
-    <div
-      id="chatbot-container"
-      style="display: none"
-      role="dialog"
-      aria-label="Chatbot"
-    >
-      <iframe
-        src="https://mistral-chatbot.vercel.app/"
-        style="width: 100%; height: 100%; border: none"
-        title="AlohaChatAI Chatbot"
-        allow="microphone"
-        loading="lazy"
-      ></iframe>
-    </div>
-
-    <button id="chatbot-button" aria-label="Open chatbot" aria-expanded="false">
-      <i class="fas fa-robot" aria-hidden="true"></i>
-    </button>
-
-    <!-- JavaScript -->
-    <script
-      src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"
-      defer
-    ></script>
-    <script
-      src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"
-      defer
-    ></script>
-
+    <title>AlohaChatAI - Intelligent Business Assistants</title>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script>
-      // Initialize Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
         authDomain: "chatbot-8cc09.firebaseapp.com",
@@ -537,12 +78,379 @@
         appId: "1:362283614085:web:146160adf6b5d2b198ceec",
         measurementId: "G-MWYVYVSGHE",
       };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <i class="fas fa-robot"></i>
+            AlohaChatAI
+          </div>
+          <!-- Hamburger Icon -->
+          <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="nav-right">
+            <div class="nav-links" id="navLinks">
+              <a href="#features">Features</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#demo">Demo</a>
+            </div>
+          </div>
+          <button
+            id="getStartedBtn"
+            class="cta-button"
+            onclick="location.href='signup-login.html'"
+          >
+            Dashboard
+          </button>
+        </nav>
+      </div>
+    </header>
 
-      // Navigation functions
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>
+          AI-Powered Chatbots That
+          <span style="color: var(--accent)">Convert Visitors</span> Into
+          Customers
+        </h1>
+        <p>
+          Our intelligent assistants provide 24/7 personalized support,
+          answering questions and booking appointments - all while perfectly
+          representing your brand.
+        </p>
+        <div class="hero-buttons">
+          <button class="cta-button">Start Free Trial</button>
+          <button class="secondary-button">Watch Demo</button>
+        </div>
+        <div class="demo-container">
+          <div class="demo-frame">
+            <!-- Chatbot demo iframe would go here -->
+            <iframe
+              title="Chatbot Demo"
+              width="100%"
+              height="100%"
+              src="https://youtube.com/embed/LSDMg8iaylA"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>Powerful Features</h2>
+          <p>
+            Everything you need to automate customer service while maintaining a
+            personal touch
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Business-Specific Knowledge</h3>
+            <p>
+              Each chatbot learns everything about your business - services,
+              hours, FAQs - and never gets confused with competitors.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Seamless Booking</h3>
+            <p>
+              Integrates with your calendar system to schedule appointments
+              directly through the chat interface.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-language"></i>
+            </div>
+            <h3>Multilingual Support</h3>
+            <p>
+              Automatically serves customers in their preferred language without
+              additional setup.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-title">
+          <h2>Simple, Transparent Pricing</h2>
+          <p>Start small and scale as your business grows</p>
+        </div>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3>Starter</h3>
+            <div class="price">$49.99<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Up to 250 conversations/mo</li>
+              <li>Basic knowledge base</li>
+              <li>Email support</li>
+              <li>Standard branding</li>
+              <li>Basic analytics</li>
+            </ul>
+            <button class="secondary-button" style="width: 100%">
+              Get Started
+            </button>
+          </div>
+          <div class="pricing-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <h3>Professional</h3>
+            <div class="price">$149.99<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Up to 2,000 conversations/mo</li>
+              <li>Advanced knowledge base</li>
+              <li>Priority support</li>
+              <li>Full white-labeling</li>
+              <li>Booking integration</li>
+              <li>Advanced analytics</li>
+            </ul>
+            <button class="cta-button" style="width: 100%">Get Started</button>
+          </div>
+          <div class="pricing-card">
+            <h3>Unlimited</h3>
+            <div class="price">$199.99</div>
+            <ul class="pricing-features">
+              <li>Unlimited conversations</li>
+              <li>Custom AI training</li>
+              <li>24/7 dedicated support</li>
+              <li>API access</li>
+              <li>Multi-location support</li>
+              <li>Custom integrations</li>
+            </ul>
+            <button class="secondary-button" style="width: 100%">
+              Get Started
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-title">
+          <h2>Trusted by Businesses Worldwide</h2>
+          <p>Don't just take our word for it - hear from our customers</p>
+        </div>
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "AlohaChatAI reduced our customer service emails by 70% while
+                actually improving our satisfaction scores. It's like having
+                another full-time employee!"
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img
+                src="https://randomuser.me/api/portraits/women/45.jpg"
+                alt="Sarah J."
+                class="author-avatar"
+              />
+              <div class="author-info">
+                <h4>Sarah Johnson</h4>
+                <p>CEO, Aloha Dental</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "The booking integration alone has paid for itself ten times
+                over. Our appointment no-show rate dropped from 25% to just 8%
+                thanks to the automated reminders."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Michael T."
+                class="author-avatar"
+              />
+              <div class="author-info">
+                <h4>Michael Thompson</h4>
+                <p>Owner, Thompson Legal</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "As a non-technical business owner, I was amazed at how easy it
+                was to set up. The AI learned everything about our services just
+                from our website."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="Lisa M."
+                class="author-avatar"
+              />
+              <div class="author-info">
+                <h4>Lisa Martinez</h4>
+                <p>Founder, Spa Serenity</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Transform Your Customer Service?</h2>
+        <p>
+          Join thousands of businesses using AlohaChatAI to provide instant,
+          accurate responses 24/7.
+        </p>
+        <button
+          class="cta-button"
+          style="padding: 15px 30px; font-size: 1.1rem"
+        >
+          Start Your 7 Day Free Trial
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <div class="logo" style="color: white; margin-bottom: 20px">
+              <i class="fas fa-robot"></i>
+              AlohaChatAI
+            </div>
+            <p style="color: var(--light-gray); margin-bottom: 20px">
+              The most intelligent business assistant platform on the market.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h3>Product</h3>
+            <ul class="footer-links">
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Integrations</a></li>
+              <li><a href="#">Roadmap</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">API Reference</a></li>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Community</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>
+            &copy; 2025 AlohaChatAI. All rights reserved. |
+            <a href="#" style="color: var(--light-gray)">Privacy Policy</a> |
+            <a href="#" style="color: var(--light-gray)">Terms of Service</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div
+      id="chatbot-container"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 380px;
+        height: 400px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        overflow: hidden;
+      "
+    >
+      <iframe
+        src="https://mistral-chatbot.vercel.app/"
+        style="width: 100%; height: 100%; border: none"
+        allow="microphone"
+      ></iframe>
+    </div>
+
+    <button
+      id="chatbot-button"
+      style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #f72585;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(18, 17, 16, 0.3);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <i class="fas fa-robot"></i>
+    </button>
+
+    <script>
       function goTo(page) {
         window.location.href = `${location.origin}${location.pathname.replace(
           /[^\/]*$/,
@@ -551,89 +459,66 @@
       }
 
       function toggleMenu() {
-        const navLinks = document.querySelector(".nav-links");
-        const hamburger = document.querySelector(".hamburger");
-        const expanded = navLinks.classList.toggle("active");
-        hamburger.setAttribute("aria-expanded", expanded);
+        const navRight = document.querySelector(".nav-right");
+        navRight.classList.toggle("show");
       }
 
-      // Smooth scrolling
+      // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-            });
-          }
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
         });
       });
 
-      // Chatbot toggle
+      // Demo animation
+      const demoFrame = document.querySelector(".demo-frame");
+      if (demoFrame) {
+        setInterval(() => {
+          demoFrame.style.backgroundPosition = `${Math.random() * 100}% ${
+            Math.random() * 100
+          }%`;
+        }, 3000);
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
-        const chatbotButton = document.getElementById("chatbot-button");
-        const chatbotContainer = document.getElementById("chatbot-container");
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
 
-        if (chatbotButton && chatbotContainer) {
-          chatbotButton.addEventListener("click", function () {
-            const isExpanded = this.getAttribute("aria-expanded") === "true";
-            this.setAttribute("aria-expanded", !isExpanded);
-            chatbotContainer.style.display = isExpanded ? "none" : "block";
+        hamburger.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+        });
+
+        // Chatbot toggle functionality
+        document
+          .getElementById("chatbot-button")
+          .addEventListener("click", function () {
+            const container = document.getElementById("chatbot-container");
+            container.style.display =
+              container.style.display === "none" ? "block" : "none";
           });
-        }
+      });
 
-        // Auth state listener
-        firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          localStorage.setItem("userLoggedIn", "true");
           const btn = document.getElementById("getStartedBtn");
           if (btn) {
-            btn.textContent = user ? "Dashboard" : "Get Started";
             btn.onclick = () => {
-              goTo(user ? "dashboard.html" : "signup-login.html");
+              goTo("/dashboard.html");
             };
           }
-        });
-      });
-
-      // Lazy load images
-      document.addEventListener("DOMContentLoaded", function () {
-        const lazyImages = [].slice.call(
-          document.querySelectorAll("img[loading='lazy']")
-        );
-
-        if ("IntersectionObserver" in window) {
-          let lazyImageObserver = new IntersectionObserver(function (
-            entries,
-            observer
-          ) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                let lazyImage = entry.target;
-                lazyImage.src = lazyImage.dataset.src;
-                lazyImageObserver.unobserve(lazyImage);
-              }
-            });
-          });
-
-          lazyImages.forEach(function (lazyImage) {
-            lazyImageObserver.observe(lazyImage);
-          });
+        } else {
+          localStorage.removeItem("userLoggedIn");
         }
       });
-    </script>
 
-    <!-- Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-XXXXXXXXXX");
+      // Optional: Auto-open chatbot after 5 seconds
+      setTimeout(() => {
+        document.getElementById("chatbot-container").style.display = "block";
+      }, 5000);
     </script>
   </body>
 </html>
