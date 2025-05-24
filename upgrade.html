@@ -412,6 +412,8 @@
 
                 const { sessionId } = await response.json();
 
+                localStorage.setItem("selectedPlan", currentPlan);
+
                 // 4. Redirect to Stripe Checkout
                 const result = await stripe.redirectToCheckout({ sessionId });
                 if (result.error) {

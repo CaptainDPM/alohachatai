@@ -82,6 +82,17 @@
 
             if (sessionId) {
                 try {
+                    const planId = localStorage.getItem('selectedPlan');
+                    if (planId) {
+                        await db.collection("businesses").doc(user.uid).update({
+                            plan: planId.split("-")[0],
+                            messagesLeft: plans[planId].messages,
+                            billingCycle: plans[planId].interval,
+                            lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
+                            status: "active"
+                        });
+                        localStorage.removeItem('selectedPlan');
+                    }
                     // Fetch the session details from your backend
                     const response = await fetch('https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/', {
                         method: 'POST',
