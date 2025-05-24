@@ -1,156 +1,205 @@
 <!-- Contact Form (contact.html) -->
 <div
   class="contact-container"
-  style="max-width: 600px; margin: 0 auto; padding: 2rem"
+  style="
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Poppins', sans-serif;
+  "
 >
-  <h1 style="text-align: center; color: #2c3e50; margin-bottom: 1.5rem">
-    Contact Us
+  <h1
+    style="
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 2rem;
+      font-weight: 600;
+      font-size: 2rem;
+    "
+  >
+    Get in Touch
   </h1>
 
   <form
     style="
       background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     "
   >
-    <div style="margin-bottom: 1.5rem">
+    <div style="margin-bottom: 1.75rem">
       <label
         for="name"
         style="
           display: block;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.75rem;
           font-weight: 500;
-          color: #34495e;
+          color: var(--dark);
         "
-        >Your Name</label
       >
+        Your Name
+      </label>
       <input
         type="text"
         id="name"
         style="
           width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          padding: 1rem;
+          border: 1px solid var(--border);
+          border-radius: 8px;
           font-size: 1rem;
+          font-family: 'Poppins', sans-serif;
+          transition: border 0.3s ease;
         "
         placeholder="John Doe"
         required
+        onfocus="this.style.borderColor='var(--primary)'"
+        onblur="this.style.borderColor='var(--border)'"
       />
     </div>
 
-    <div style="margin-bottom: 1.5rem">
+    <div style="margin-bottom: 1.75rem">
       <label
         for="email"
         style="
           display: block;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.75rem;
           font-weight: 500;
-          color: #34495e;
+          color: var(--dark);
         "
-        >Email Address</label
       >
+        Email Address
+      </label>
       <input
         type="email"
         id="email"
         style="
           width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          padding: 1rem;
+          border: 1px solid var(--border);
+          border-radius: 8px;
           font-size: 1rem;
+          font-family: 'Poppins', sans-serif;
+          transition: border 0.3s ease;
         "
         placeholder="you@example.com"
         required
+        onfocus="this.style.borderColor='var(--primary)'"
+        onblur="this.style.borderColor='var(--border)'"
       />
     </div>
 
-    <div style="margin-bottom: 1.5rem">
+    <div style="margin-bottom: 1.75rem">
       <label
         for="subject"
         style="
           display: block;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.75rem;
           font-weight: 500;
-          color: #34495e;
+          color: var(--dark);
         "
-        >Subject</label
       >
+        How can we help?
+      </label>
       <select
         id="subject"
         style="
           width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          padding: 1rem;
+          border: 1px solid var(--border);
+          border-radius: 8px;
           font-size: 1rem;
+          font-family: 'Poppins', sans-serif;
           background: white;
+          color: var(--dark);
+          appearance: none;
+          transition: border 0.3s ease;
         "
+        onfocus="this.style.borderColor='var(--primary)'"
+        onblur="this.style.borderColor='var(--border)'"
       >
         <option value="" disabled selected>Select a topic</option>
         <option value="sales">Sales Inquiry</option>
         <option value="support">Technical Support</option>
         <option value="feedback">Product Feedback</option>
-        <option value="other">Other</option>
+        <option value="partnership">Partnership Opportunity</option>
       </select>
     </div>
 
-    <div style="margin-bottom: 1.5rem">
+    <div style="margin-bottom: 2rem">
       <label
         for="message"
         style="
           display: block;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.75rem;
           font-weight: 500;
-          color: #34495e;
+          color: var(--dark);
         "
-        >Message</label
       >
+        Your Message
+      </label>
       <textarea
         id="message"
         rows="5"
         style="
           width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          padding: 1rem;
+          border: 1px solid var(--border);
+          border-radius: 8px;
           font-size: 1rem;
+          font-family: 'Poppins', sans-serif;
           resize: vertical;
+          min-height: 150px;
+          transition: border 0.3s ease;
         "
-        placeholder="How can we help you?"
+        placeholder="Tell us how we can help..."
         required
+        onfocus="this.style.borderColor='var(--primary)'"
+        onblur="this.style.borderColor='var(--border)'"
       ></textarea>
     </div>
 
     <button
       type="submit"
       style="
-        background: #f72585;
+        background: var(--accent);
         color: white;
         border: none;
-        padding: 0.75rem 1.5rem;
+        padding: 1rem 2rem;
         font-size: 1rem;
-        border-radius: 4px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        border-radius: 8px;
         cursor: pointer;
         width: 100%;
-        font-weight: 600;
-        transition: background 0.2s;
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
       "
-      onmouseover="this.style.background='#e5177b'"
-      onmouseout="this.style.background='#f72585'"
+      onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(247, 37, 133, 0.3)'"
+      onmouseout="this.style.transform='none'; this.style.boxShadow='none'"
+      onclick="this.style.transform='translateY(1px)'"
     >
       Send Message
     </button>
   </form>
 
-  <div style="text-align: center; margin-top: 2rem; color: #7f8c8d">
+  <div
+    style="
+      text-align: center;
+      margin-top: 2.5rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+    "
+  >
     <p>
-      Or email us directly at
-      <a href="mailto:contact@alohachatai.com" style="color: #f72585"
+      Prefer email? Contact us at
+      <a
+        href="mailto:contact@alohachatai.com"
+        style="color: var(--accent); text-decoration: none; font-weight: 500"
         >contact@alohachatai.com</a
       >
     </p>
+    <p style="margin-top: 0.5rem">We typically respond within 24 hours</p>
   </div>
 </div>
