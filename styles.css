@@ -1091,11 +1091,11 @@ footer {
   border-radius: 50%;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--primary);
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(26px);
 }
 
@@ -1318,7 +1318,7 @@ input:checked+.slider:before {
 }
 
 .success-icon {
-  color: #4CAF50;
+  color: #4caf50;
   font-size: 4rem;
   margin-bottom: 1.5rem;
 }
@@ -1357,6 +1357,37 @@ input:checked+.slider:before {
 
 .order-details strong {
   color: #2c3e50;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+.btn-cta {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btn-cta:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+.btn-cta i {
+  margin-right: 8px;
 }
 
 /* Responsive */
@@ -1464,7 +1495,7 @@ input:checked+.slider:before {
     width: 20px;
   }
 
-  input:checked+.slider:before {
+  input:checked + .slider:before {
     transform: translateX(22px);
   }
 }
