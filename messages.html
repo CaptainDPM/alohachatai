@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy More Messages | AlohaChatAI</title>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Stripe.js for checkout -->
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo"><i class="fas fa-robot"></i>AlohaChatAI</div>
+          <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="messages.html" class="active">Messages</a>
+            <a href="plans.html">Plans</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="pricing-section">
+        <div class="section-header">
+          <h1>Buy More Messages</h1>
+          <p>Top up your message balance with these one-time purchases</p>
+        </div>
+
+        <div class="packages-grid">
+          <!-- Small package -->
+          <div class="package-card">
+            <div class="package-header">
+              <h3>Small Top-Up</h3>
+              <div class="price">
+                <span>$9.99</span>
+              </div>
+            </div>
+            <ul class="package-features">
+              <li>✓ 50 additional messages</li>
+              <li>✓ Immediate delivery</li>
+              <li>✓ No recurring charges</li>
+            </ul>
+            <button
+              class="btn btn-secondary package-select"
+              data-package="small"
+            >
+              Buy Now
+            </button>
+          </div>
+
+          <!-- Medium package (Popular) -->
+          <div class="package-card popular">
+            <div class="popular-badge">Best Value</div>
+            <div class="package-header">
+              <h3>Medium Top-Up</h3>
+              <div class="price">
+                <span>$19.99</span>
+              </div>
+            </div>
+            <ul class="package-features">
+              <li>✓ 150 additional messages</li>
+              <li>✓ Immediate delivery</li>
+              <li>✓ No recurring charges</li>
+              <li>✓ Save 33% vs small packs</li>
+            </ul>
+            <button
+              class="btn btn-primary package-select"
+              data-package="medium"
+            >
+              Buy Now
+            </button>
+          </div>
+
+          <!-- Large package -->
+          <div class="package-card">
+            <div class="package-header">
+              <h3>Large Top-Up</h3>
+              <div class="price">
+                <span>$29.99</span>
+              </div>
+            </div>
+            <ul class="package-features">
+              <li>✓ 300 additional messages</li>
+              <li>✓ Immediate delivery</li>
+              <li>✓ No recurring charges</li>
+              <li>✓ Save 50% vs small packs</li>
+            </ul>
+            <button
+              class="btn btn-secondary package-select"
+              data-package="large"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Checkout Modal (hidden by default) -->
+      <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>Confirm Your Purchase</h2>
+          <div id="checkout-details">
+            <p>
+              You're purchasing:
+              <strong id="selected-package-name">Medium Top-Up</strong>
+            </p>
+            <p>Total: <strong id="selected-package-price">$19.99</strong></p>
+            <p class="message-count">
+              You'll receive:
+              <strong id="selected-message-count">150</strong> messages
+            </p>
+          </div>
+          <button id="confirm-purchase" class="btn btn-primary">
+            Continue to Secure Checkout
+          </button>
+          <p class="secure-checkout-note">
+            <i class="fas fa-lock"></i> Your payment will be processed securely
+            by Stripe
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+      // Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
+        authDomain: "chatbot-8cc09.firebaseapp.com",
+        projectId: "chatbot-8cc09",
+        storageBucket: "chatbot-8cc09.firebasestorage.app",
+        messagingSenderId: "362283614085",
+        appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+        measurementId: "G-MWYVYVSGHE",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      // Stripe setup (replace with your publishable key)
+      const stripe = Stripe(
+        "pk_test_51RRjxSIRT7PI5JKElpphAabOl4RAgMGJuaZJUCRliNyzjRS1Zxu9867IYtDVpk09RdHE6V17cRjZv6Zp8T7qQnrv00Dznh89xx"
+      );
+      let currentPackage;
+
+      // Package data
+      const packages = {
+        small: {
+          name: "Small Top-Up",
+          price: 999,
+          messages: 50,
+          priceId: "price_1RSSkKIRT7PI5JKE5hzr3jfI",
+        },
+        medium: {
+          name: "Medium Top-Up",
+          price: 1999,
+          messages: 150,
+          priceId: "price_1RSSkdIRT7PI5JKEgLV0SsHo",
+        },
+        large: {
+          name: "Large Top-Up",
+          price: 2999,
+          messages: 300,
+          priceId: "price_1RSSkuIRT7PI5JKEtQKZi2Vd",
+        },
+      };
+
+      // DOM Ready
+      document.addEventListener("DOMContentLoaded", function () {
+        // Package selection buttons
+        document.querySelectorAll(".package-select").forEach((button) => {
+          button.addEventListener("click", handlePackageSelect);
+        });
+
+        document
+          .getElementById("confirm-purchase")
+          .addEventListener("click", handlePayment);
+
+        // Modal close button
+        document
+          .querySelector(".close-modal")
+          .addEventListener("click", closeModal);
+
+        // Check auth state
+        auth.onAuthStateChanged((user) => {
+          if (!user) {
+            window.location.href = "signup-login.html";
+          }
+        });
+      });
+
+      function handlePackageSelect(e) {
+        const packageId = e.target.dataset.package;
+        const package = packages[packageId];
+
+        // Update modal display
+        document.getElementById("selected-package-name").textContent =
+          package.name;
+        document.getElementById("selected-package-price").textContent = `$${(
+          package.price / 100
+        ).toFixed(2)}`;
+        document.getElementById("selected-message-count").textContent =
+          package.messages;
+
+        // Show modal
+        document.getElementById("checkout-modal").style.display = "block";
+
+        // Store selected package
+        currentPackage = packageId;
+      }
+
+      function closeModal() {
+        document.getElementById("checkout-modal").style.display = "none";
+      }
+
+      async function handlePayment() {
+        const submitButton = document.getElementById("confirm-purchase");
+        submitButton.disabled = true;
+        submitButton.textContent = "Processing...";
+
+        try {
+          // 1. Get the Stripe price ID for selected package
+          const priceId = packages[currentPackage].priceId;
+          console.log("Attempting payment with priceId:", priceId);
+
+          if (!priceId) {
+            throw new Error(
+              "Selected package is not properly configured with a price ID"
+            );
+          }
+
+          // 2. Get Firebase Auth token if needed
+          const token = await auth.currentUser.getIdToken();
+
+          // 3. Send POST request to your Lambda function to create Stripe Checkout Session
+          const response = await fetch(
+            "https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                priceId,
+                isOneTime: true,
+                messages: packages[currentPackage].messages,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || "Failed to create payment session"
+            );
+          }
+
+          const { sessionId } = await response.json();
+
+          localStorage.setItem("selectedPackage", currentPackage);
+          console.log(
+            "Selected package stored in localStorage:",
+            currentPackage
+          );
+
+          // 4. Redirect to Stripe Checkout
+          const result = await stripe.redirectToCheckout({ sessionId });
+          if (result.error) {
+            throw result.error;
+          }
+        } catch (error) {
+          console.error("Payment error:", error);
+          alert(error.message || "An error occurred. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Continue to Secure Checkout";
+        }
+      }
+    </script>
+  </body>
+</html>

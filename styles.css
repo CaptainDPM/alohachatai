@@ -1124,6 +1124,31 @@ input:checked+.slider:before {
   border: 2px solid var(--accent);
 }
 
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.package-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.package-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.package-card.popular {
+  border: 2px solid var(--accent);
+}
+
 .popular-badge {
   position: absolute;
   top: -12px;
@@ -1143,6 +1168,18 @@ input:checked+.slider:before {
 }
 
 .plan-header h3 {
+  font-size: 1.5rem;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.package-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.package-header h3 {
   font-size: 1.5rem;
   color: var(--dark);
   margin-bottom: 0.5rem;

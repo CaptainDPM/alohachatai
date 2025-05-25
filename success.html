@@ -1,49 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Successful | AlohaChatAI</title>
-    <link rel="icon" href="assets/logo.png" type="image/x-icon">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">AlohaChatAI</div>
-                <div class="nav-links">
-                    <a href="dashboard.html">Dashboard</a>
-                    <a href="plans.html">Plans</a>
-                    <a href="#" id="logout-btn">Logout</a>
-                </div>
-            </nav>
-        </div>
+      <div class="container">
+        <nav>
+          <div class="logo">AlohaChatAI</div>
+          <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="plans.html">Plans</a>
+            <a href="messages.html">Messages</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </nav>
+      </div>
     </header>
 
     <main class="container">
-        <section class="success-section">
-            <div class="success-card">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h1>Payment Successful!</h1>
-                <p>Thank you for upgrading your AlohaChatAI plan.</p>
-                <p>Your subscription is now active and you can start using all the premium features immediately.</p>
-                <div class="order-details">
-                    <h3>Order Details</h3>
-                    <div id="order-info">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
-                </div>
-                <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+      <section class="success-section">
+        <div class="success-card">
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h1>Payment Successful!</h1>
+          <p id="success-message">Thank you for your purchase.</p>
+          <div class="order-details">
+            <h3>Order Details</h3>
+            <div id="order-info">
+              <!-- Will be populated by JavaScript -->
             </div>
-        </section>
+          </div>
+          <div class="message-balance" id="message-balance-container">
+            <h3>Your Message Balance</h3>
+            <div id="message-balance-info">
+              <!-- Will be populated by JavaScript -->
+            </div>
+          </div>
+          <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+      </section>
     </main>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
@@ -52,139 +62,247 @@
     <script src="https://js.stripe.com/v3/"></script>
 
     <script>
-        // Firebase config (same as your other pages)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
-            authDomain: "chatbot-8cc09.firebaseapp.com",
-            projectId: "chatbot-8cc09",
-            storageBucket: "chatbot-8cc09.firebasestorage.app",
-            messagingSenderId: "362283614085",
-            appId: "1:362283614085:web:146160adf6b5d2b198ceec",
-            measurementId: "G-MWYVYVSGHE",
-        };
+      // Firebase config (same as your other pages)
+      const firebaseConfig = {
+        apiKey: "AIzaSyDj8RVucd-TZBVQt080g_nk1MKU6knGZ8o",
+        authDomain: "chatbot-8cc09.firebaseapp.com",
+        projectId: "chatbot-8cc09",
+        storageBucket: "chatbot-8cc09.firebasestorage.app",
+        messagingSenderId: "362283614085",
+        appId: "1:362283614085:web:146160adf6b5d2b198ceec",
+        measurementId: "G-MWYVYVSGHE",
+      };
 
-        const plans = {
-            "starter-monthly": {
-                name: "Starter",
-                price: 4999,
-                interval: "month",
-                messages: 250,
-            },
-            "starter-annual": {
-                name: "Starter",
-                price: 47988,
-                interval: "year",
-                messages: 250,
-            },
-            "professional-monthly": {
-                name: "Professional",
-                price: 14999,
-                interval: "month",
-                messages: 2000,
-            },
-            "professional-annual": {
-                name: "Professional",
-                price: 143988,
-                interval: "year",
-                messages: 2000,
-            },
-            "unlimited-monthly": {
-                name: "Unlimited",
-                price: 19999,
-                interval: "month",
-                messages: -1,
-            }, // -1 for unlimited
-            "unlimited-annual": {
-                name: "Unlimited",
-                price: 191988,
-                interval: "year",
-                messages: -1,
-            },
-        };
+      const plans = {
+        "starter-monthly": {
+          name: "Starter",
+          price: 4999,
+          interval: "month",
+          messages: 250,
+        },
+        "starter-annual": {
+          name: "Starter",
+          price: 47988,
+          interval: "year",
+          messages: 250,
+        },
+        "professional-monthly": {
+          name: "Professional",
+          price: 14999,
+          interval: "month",
+          messages: 2000,
+        },
+        "professional-annual": {
+          name: "Professional",
+          price: 143988,
+          interval: "year",
+          messages: 2000,
+        },
+        "unlimited-monthly": {
+          name: "Unlimited",
+          price: 19999,
+          interval: "month",
+          messages: -1,
+        }, // -1 for unlimited
+        "unlimited-annual": {
+          name: "Unlimited",
+          price: 191988,
+          interval: "year",
+          messages: -1,
+        },
+      };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+      // Package data
+      const packages = {
+        small: {
+          name: "Small Top-Up",
+          price: 999,
+          messages: 50,
+          priceId: "price_1RSSkKIRT7PI5JKE5hzr3jfI",
+        },
+        medium: {
+          name: "Medium Top-Up",
+          price: 1999,
+          messages: 150,
+          priceId: "price_1RSSkdIRT7PI5JKEgLV0SsHo",
+        },
+        large: {
+          name: "Large Top-Up",
+          price: 2999,
+          messages: 300,
+          priceId: "price_1RSSkuIRT7PI5JKEtQKZi2Vd",
+        },
+      };
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            // Check auth state
-            auth.onAuthStateChanged((user) => {
-                if (!user) {
-                    window.location.href = "signup-login.html";
-                    return;
-                }
-            });
-            const user = await new Promise((resolve) => {
-                const unsubscribe = auth.onAuthStateChanged((user) => {
-                    unsubscribe(); // Stop listening after first event
-                    resolve(user);
-                });
-            });
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
 
-            // Get the session ID from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get('session_id');
-
-            if (sessionId) {
-                try {
-                    const planId = localStorage.getItem('selectedPlan');
-                    if (planId) {
-                        await db.collection("businesses").doc(user.uid).update({
-                            plan: planId.split("-")[0],
-                            messagesLeft: plans[planId].messages,
-                            billingCycle: plans[planId].interval,
-                            lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
-                            status: "active"
-                        });
-                        localStorage.removeItem('selectedPlan');
-                    }
-                    // Fetch the session details from your backend
-                    const response = await fetch('https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ action: 'retrieve_session', sessionId })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to retrieve session details');
-                    }
-
-                    const session = await response.json();
-                    displayOrderDetails(session);
-                } catch (error) {
-                    console.error('Error:', error);
-                    document.getElementById('order-info').innerHTML = `
-            <p>We've received your payment, but couldn't retrieve order details.</p>
-            <p>Your account has been upgraded successfully.</p>
-          `;
-                }
-            }
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Check auth state
+        const user = await new Promise((resolve) => {
+          const unsubscribe = auth.onAuthStateChanged((user) => {
+            unsubscribe(); // Stop listening after first event
+            resolve(user);
+          });
         });
 
-        function displayOrderDetails(session) {
-            const orderInfo = document.getElementById('order-info');
-            const planName = session.metadata?.plan_id?.split('-')[0] ||
-                session.line_items?.data[0]?.price?.product?.name ||
-                'Premium Plan';
-            const amount = (session.amount_total / 100).toFixed(2);
-            const currency = session.currency.toUpperCase() || 'USD';
-            const paymentStatus = session.payment_status || 'paid';
-            const paymentDate = new Date(session.created * 1000).toLocaleDateString();
-
-            const shortId = session.id ? `${session.id.substring(8, 18)}...${session.id.substring(session.id.length - 4)}` : '';
-
-            orderInfo.innerHTML = `
-        <p><strong>Plan:</strong> ${planName}</p>
-        <p><strong>Amount:</strong> ${currency} ${amount}</p>
-        <p><strong>Status:</strong> ${paymentStatus}</p>
-        <p><strong>Date:</strong> ${paymentDate}</p>
-        <p><strong>Order ID:</strong> ${shortId}</p>
-      `;
+        if (!user) {
+          window.location.href = "signup-login.html";
+          return;
         }
-    </script>
-</body>
 
+        // Get the session ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get("session_id");
+
+        if (sessionId) {
+          try {
+            // First get current business data
+            const businessDoc = await db
+              .collection("businesses")
+              .doc(user.uid)
+              .get();
+            const businessData = businessDoc.data();
+            let currentMessages = businessData.messagesLeft || 0;
+            let isUnlimited = currentMessages === -1;
+
+            // Check if this was a plan purchase or message top-up
+            const planId = localStorage.getItem("selectedPlan");
+            const packageId = localStorage.getItem("selectedPackage");
+
+            if (planId) {
+              // Handle plan subscription
+              const plan = plans[planId];
+              await db
+                .collection("businesses")
+                .doc(user.uid)
+                .update({
+                  plan: planId.split("-")[0],
+                  messagesLeft: plan.messages,
+                  billingCycle: plan.interval,
+                  lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
+                  status: "active",
+                });
+              localStorage.removeItem("selectedPlan");
+
+              // Update success message
+              document.getElementById(
+                "success-message"
+              ).textContent = `Thank you for upgrading to the ${plan.name} plan. You can now access all premium features.`;
+
+              isUnlimited = plan.messages === -1;
+              currentMessages = plan.messages;
+            } else if (packageId) {
+              // Handle message top-up
+              const package = packages[packageId];
+              const newMessages = isUnlimited
+                ? -1
+                : currentMessages + package.messages;
+
+              await db.collection("businesses").doc(user.uid).update({
+                messagesLeft: newMessages,
+                lastPayment: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+              localStorage.removeItem("selectedPackage");
+
+              // Update success message
+              document.getElementById(
+                "success-message"
+              ).textContent = `Thank you for your purchase! ${package.messages} messages have been added to your account.`;
+
+              currentMessages = newMessages;
+            }
+
+            // Fetch the session details from your backend
+            const response = await fetch(
+              "https://yhanf5calz7wg433mk63v7tn340sfkuu.lambda-url.us-east-1.on.aws/",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ action: "retrieve_session", sessionId }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("Failed to retrieve session details");
+            }
+
+            const session = await response.json();
+            displayOrderDetails(session, planId || packageId);
+            displayMessageBalance(currentMessages, isUnlimited);
+          } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("order-info").innerHTML = `
+              <p>We've received your payment, but couldn't retrieve order details.</p>
+              <p>Your account has been updated successfully.</p>
+            `;
+          }
+        }
+      });
+
+      function displayOrderDetails(session, productId) {
+        const orderInfo = document.getElementById("order-info");
+        let productName = "Product";
+        let productType = "Purchase";
+
+        // Determine if this was a plan or package
+        if (plans[productId]) {
+          productName = plans[productId].name;
+          productType = "Subscription";
+        } else if (packages[productId]) {
+          productName = packages[productId].name;
+          productType = "Message Top-Up";
+        } else {
+          // Fallback to Stripe data if we don't have the product ID
+          productName =
+            session.line_items?.data[0]?.price?.product?.name || productName;
+          productType =
+            session.mode === "subscription"
+              ? "Subscription"
+              : "One-Time Payment";
+        }
+
+        const amount = (session.amount_total / 100).toFixed(2);
+        const currency = session.currency.toUpperCase() || "USD";
+        const paymentStatus = session.payment_status || "paid";
+        const paymentDate = new Date(
+          session.created * 1000
+        ).toLocaleDateString();
+        const shortId = session.id
+          ? `${session.id.substring(0, 8)}...${session.id.substring(
+              session.id.length - 4
+            )}`
+          : "";
+
+        orderInfo.innerHTML = `
+          <p><strong>Type:</strong> ${productType}</p>
+          <p><strong>Product:</strong> ${productName}</p>
+          <p><strong>Amount:</strong> ${currency} ${amount}</p>
+          <p><strong>Status:</strong> ${paymentStatus}</p>
+          <p><strong>Date:</strong> ${paymentDate}</p>
+          <p><strong>Order ID:</strong> ${shortId}</p>
+        `;
+      }
+
+      function displayMessageBalance(messageCount, isUnlimited) {
+        const balanceContainer = document.getElementById(
+          "message-balance-info"
+        );
+
+        if (isUnlimited) {
+          balanceContainer.innerHTML = `
+            <p><strong>Your plan includes unlimited messages!</strong></p>
+          `;
+        } else {
+          balanceContainer.innerHTML = `
+            <p><strong>Total Messages Available:</strong> ${messageCount}</p>
+          `;
+        }
+      }
+    </script>
+  </body>
 </html>
