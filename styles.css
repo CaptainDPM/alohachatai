@@ -1478,6 +1478,40 @@ input:checked + .slider:before {
     display: block;
     overflow-x: auto;
   }
+
+  .current-badge {
+    background: #4caf50;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  .btn-current {
+    background-color: #e0e0e0 !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+  }
+
+  .current-plan {
+    border: 2px solid #4caf50;
+    position: relative;
+  }
+
+  .current-plan::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    border-radius: inherit;
+    pointer-events: none;
+  }
 }
 
 @media (max-width: 400px) {

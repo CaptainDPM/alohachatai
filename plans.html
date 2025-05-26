@@ -301,6 +301,67 @@
 
       // DOM Ready
       document.addEventListener("DOMContentLoaded", function () {
+        auth.onAuthStateChanged(async (user) => {
+          if (!user) {
+            window.location.href = "signup-login.html";
+            return;
+          }
+
+          // Get current user's plan from Firestore
+          try {
+            const businessDoc = await db
+              .collection("businesses")
+              .doc(user.uid)
+              .get();
+            if (businessDoc.exists) {
+              const businessData = businessDoc.data();
+              const currentPlanName = businessData.plan; // "starter", "professional", or "unlimited"
+              const billingCycle = businessData.billingCycle; // "month" or "year"
+
+              if (currentPlanName) {
+                // Find all plan cards and update the one that matches current plan
+                document.querySelectorAll(".plan-card").forEach((card) => {
+                  const planName = card
+                    .querySelector("h3")
+                    .textContent.toLowerCase();
+
+                  if (planName === currentPlanName.toLowerCase()) {
+                    // Add current plan indicator
+                    const currentBadge = document.createElement("div");
+                    currentBadge.className = "current-badge";
+                    currentBadge.textContent = "Your Current Plan";
+                    card
+                      .querySelector(".plan-header")
+                      .appendChild(currentBadge);
+
+                    // Update the button
+                    const button = card.querySelector(".plan-select");
+                    button.textContent = "Current Plan";
+                    button.classList.remove("btn-primary", "btn-secondary");
+                    button.classList.add("btn-current");
+                    button.disabled = true;
+
+                    // Highlight the current plan card
+                    card.classList.add("current-plan");
+                  }
+                });
+
+                // Set the billing toggle to match current cycle
+                if (billingCycle) {
+                  const billingToggle =
+                    document.getElementById("billing-toggle");
+                  if (billingCycle === "year") {
+                    billingToggle.checked = true;
+                    toggleBilling(true);
+                  }
+                }
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching user plan:", error);
+          }
+        });
+
         // Billing toggle
         const billingToggle = document.getElementById("billing-toggle");
         if (billingToggle) {
