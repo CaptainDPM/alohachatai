@@ -214,7 +214,7 @@ select {
 }
 
 /* Main */
-main {
+main.container.settings-container {
   margin-top: 80px;
 }
 
