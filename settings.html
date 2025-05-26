@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <header style="position: 0;">
+    <header style="position: 0">
       <div class="container">
         <nav>
           <div class="logo"><i class="fas fa-robot"></i>AlohaChatAI</div>
@@ -33,153 +33,149 @@
     </header>
 
     <main class="container settings-container">
-      <div class="inside-container">
-        <h1>Settings</h1>
+      <h1>Settings</h1>
 
-        <div class="settings-tabs">
-          <div class="settings-tab active" data-tab="business">
-            Business Info
+      <div class="settings-tabs">
+        <div class="settings-tab active" data-tab="business">Business Info</div>
+        <div class="settings-tab" data-tab="chatbot">Chatbot Settings</div>
+        <div class="settings-tab" data-tab="integrations">Integrations</div>
+      </div>
+
+      <!-- Business Info Tab -->
+      <div class="settings-content active" id="business-tab">
+        <div class="form-section">
+          <h3 class="form-section-title">Business Information</h3>
+          <div class="form-group">
+            <label class="form-label">Business Name</label>
+            <input
+              type="text"
+              id="businessName"
+              class="form-input"
+              placeholder="e.g. Aloha Dental"
+            />
           </div>
-          <div class="settings-tab" data-tab="chatbot">Chatbot Settings</div>
-          <div class="settings-tab" data-tab="integrations">Integrations</div>
+          <div class="form-group">
+            <label class="form-label">Website URL</label>
+            <input
+              type="url"
+              id="websiteUrl"
+              class="form-input"
+              placeholder="https://yourbusiness.com"
+            />
+          </div>
         </div>
 
-        <!-- Business Info Tab -->
-        <div class="settings-content active" id="business-tab">
-          <div class="form-section">
-            <h3 class="form-section-title">Business Information</h3>
-            <div class="form-group">
-              <label class="form-label">Business Name</label>
-              <input
-                type="text"
-                id="businessName"
-                class="form-input"
-                placeholder="e.g. Aloha Dental"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Website URL</label>
-              <input
-                type="url"
-                id="websiteUrl"
-                class="form-input"
-                placeholder="https://yourbusiness.com"
-              />
-            </div>
+        <div class="form-section">
+          <h3 class="form-section-title">Contact Information</h3>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input
+              type="email"
+              id="businessEmail"
+              class="form-input"
+              placeholder="contact@yourbusiness.com"
+            />
           </div>
-
-          <div class="form-section">
-            <h3 class="form-section-title">Contact Information</h3>
-            <div class="form-group">
-              <label class="form-label">Email Address</label>
-              <input
-                type="email"
-                id="businessEmail"
-                class="form-input"
-                placeholder="contact@yourbusiness.com"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Phone Number</label>
-              <input
-                type="tel"
-                id="businessPhone"
-                class="form-input"
-                placeholder="(123) 456-7890"
-              />
-            </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              id="businessPhone"
+              class="form-input"
+              placeholder="(123) 456-7890"
+            />
           </div>
-
-          <button class="save-btn" id="saveBusinessInfo">
-            Save Business Info
-          </button>
-          <div id="businessStatus" class="status-message"></div>
         </div>
 
-        <!-- Chatbot Settings Tab -->
-        <div class="settings-content" id="chatbot-tab">
-          <div class="form-section">
-            <h3 class="form-section-title">Chatbot Personality</h3>
-            <div class="form-group">
-              <label class="form-label">Chatbot Name</label>
-              <input
-                type="text"
-                id="chatbotName"
-                class="form-input"
-                placeholder="e.g. Aloha Assistant"
-              />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Welcome Message</label>
-              <input
-                type="text"
-                id="welcomeMessage"
-                class="form-input"
-                placeholder="Hi there! How can I help you today?"
-              />
-            </div>
-          </div>
+        <button class="save-btn" id="saveBusinessInfo">
+          Save Business Info
+        </button>
+        <div id="businessStatus" class="status-message"></div>
+      </div>
 
-          <div class="form-section">
-            <h3 class="form-section-title">Frequently Asked Questions</h3>
-            <p class="subtext">
-              Add common questions and answers (one per line):
-            </p>
-            <textarea
-              id="faqs"
-              class="form-textarea"
-              placeholder="Q: What's your cancellation policy?&#10;A: 24 hours notice required..."
-            ></textarea>
+      <!-- Chatbot Settings Tab -->
+      <div class="settings-content" id="chatbot-tab">
+        <div class="form-section">
+          <h3 class="form-section-title">Chatbot Personality</h3>
+          <div class="form-group">
+            <label class="form-label">Chatbot Name</label>
+            <input
+              type="text"
+              id="chatbotName"
+              class="form-input"
+              placeholder="e.g. Aloha Assistant"
+            />
           </div>
-
-          <button class="save-btn" id="saveChatbotSettings">
-            Save Chatbot Settings
-          </button>
-          <div id="chatbotStatus" class="status-message"></div>
+          <div class="form-group">
+            <label class="form-label">Welcome Message</label>
+            <input
+              type="text"
+              id="welcomeMessage"
+              class="form-input"
+              placeholder="Hi there! How can I help you today?"
+            />
+          </div>
         </div>
 
-        <!-- Integrations Tab -->
-        <div class="settings-content" id="integrations-tab">
-          <div class="form-section">
-            <h3 class="form-section-title">Booking System</h3>
-            <div class="form-group">
-              <label class="form-label">Booking System Type</label>
-              <select id="bookingType" class="form-input">
-                <option value="none">No booking system</option>
-                <option value="booker">Booker</option>
-                <option value="dentrix">Dentrix</option>
-                <option value="acuity">Acuity Scheduling</option>
-                <option value="calendly">Calendly</option>
-              </select>
-            </div>
-            <div class="form-group" id="bookingUrlGroup" style="display: none">
-              <label class="form-label">Booking Page URL</label>
-              <input
-                type="url"
-                id="bookingUrl"
-                class="form-input"
-                placeholder="https://yourbookingpage.com"
-              />
-            </div>
-          </div>
-
-          <div class="form-section">
-            <h3 class="form-section-title">Calendar Integration</h3>
-            <div class="form-group">
-              <label class="form-label">Calendar Service</label>
-              <select id="calendarService" class="form-input">
-                <option value="none">No calendar integration</option>
-                <option value="google">Google Calendar</option>
-                <option value="outlook">Microsoft Outlook</option>
-              </select>
-            </div>
-          </div>
-
-          <button class="save-btn" id="saveIntegrations">
-            Save Integrations
-          </button>
-          <div id="integrationsStatus" class="status-message"></div>
+        <div class="form-section">
+          <h3 class="form-section-title">Frequently Asked Questions</h3>
+          <p class="subtext">
+            Add common questions and answers (one per line):
+          </p>
+          <textarea
+            id="faqs"
+            class="form-textarea"
+            placeholder="Q: What's your cancellation policy?&#10;A: 24 hours notice required..."
+          ></textarea>
         </div>
+
+        <button class="save-btn" id="saveChatbotSettings">
+          Save Chatbot Settings
+        </button>
+        <div id="chatbotStatus" class="status-message"></div>
+      </div>
+
+      <!-- Integrations Tab -->
+      <div class="settings-content" id="integrations-tab">
+        <div class="form-section">
+          <h3 class="form-section-title">Booking System</h3>
+          <div class="form-group">
+            <label class="form-label">Booking System Type</label>
+            <select id="bookingType" class="form-input">
+              <option value="none">No booking system</option>
+              <option value="booker">Booker</option>
+              <option value="dentrix">Dentrix</option>
+              <option value="acuity">Acuity Scheduling</option>
+              <option value="calendly">Calendly</option>
+            </select>
+          </div>
+          <div class="form-group" id="bookingUrlGroup" style="display: none">
+            <label class="form-label">Booking Page URL</label>
+            <input
+              type="url"
+              id="bookingUrl"
+              class="form-input"
+              placeholder="https://yourbookingpage.com"
+            />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="form-section-title">Calendar Integration</h3>
+          <div class="form-group">
+            <label class="form-label">Calendar Service</label>
+            <select id="calendarService" class="form-input">
+              <option value="none">No calendar integration</option>
+              <option value="google">Google Calendar</option>
+              <option value="outlook">Microsoft Outlook</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="save-btn" id="saveIntegrations">
+          Save Integrations
+        </button>
+        <div id="integrationsStatus" class="status-message"></div>
       </div>
     </main>
 
