@@ -20,7 +20,7 @@
     <header>
       <div class="container">
         <nav>
-          <div class="logo">AlohaChatAI</div>
+          <div class="logo"><i class="fas fa-robot"></i>AlohaChatAI</div>
           <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
             <a href="plans.html">Plans</a>
@@ -53,7 +53,7 @@
           </div>
 
           <div class="button-group">
-            <a href="intake-form.html" class="btn-cta">
+            <a href="intake_form.html" class="btn-cta">
               <i class="fas fa-clipboard-list"></i> Complete Your Setup
             </a>
             <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
@@ -281,7 +281,7 @@
 
         const amount = (session.amount_total / 100).toFixed(2);
         const currency = session.currency.toUpperCase() || "USD";
-        const paymentStatus = session.payment_status || "paid";
+        const paymentStatus = session.payment_status || "Paid";
         const paymentDate = new Date(
           session.created * 1000
         ).toLocaleDateString();
