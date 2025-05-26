@@ -213,11 +213,6 @@ select {
   color: var(--primary);
 }
 
-/* Main */
-main.container.settings-container {
-  margin-top: 80px;
-}
-
 /* Header */
 header {
   background: white;
@@ -296,6 +291,11 @@ nav {
   background: var(--primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+/* Main */
+main.container.settings-container {
+  margin-top: 80px;
 }
 
 /* Hero Section */
