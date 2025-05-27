@@ -366,7 +366,7 @@
           const tenantId = firebase.auth().currentUser.uid;
           const idToken = await firebase.auth().currentUser.getIdToken();
 
-          const response = await fetch('https://mistral-chatbot.vercel.app/api/scrape-and-embed', {
+          const response = await fetch('https://scraper-and-embed.vercel.app/api/scrape-and-embed', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
