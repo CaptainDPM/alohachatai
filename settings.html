@@ -402,6 +402,26 @@
             }
           });
 
+        document
+          .getElementById("saveBusinessInfo")
+          .addEventListener("click", async () => {
+            const websiteUrl = document.getElementById("website").value;
+            const tenantId = firebase.auth().currentUser.uid;
+            const API_URL = "https://mistral-chatbot.vercel.app";
+
+            const response = await fetch(`${API_URL}/api/scrape-and-embed`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ url: websiteUrl, tenantId }),
+            });
+
+            if (response.ok) {
+              alert("Website data processed successfully!");
+            } else {
+              alert("Error: Could not save website.");
+            }
+          });
+
         // Helper function to show status messages
         function showStatus(elementId, message, type) {
           const element = document.getElementById(elementId);
