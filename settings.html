@@ -405,7 +405,7 @@
         document
           .getElementById("saveBusinessInfo")
           .addEventListener("click", async () => {
-            const websiteUrl = document.getElementById("website").value;
+            const websiteUrl = document.getElementById("websiteUrl").value;
             const tenantId = firebase.auth().currentUser.uid;
             const API_URL = "https://mistral-chatbot.vercel.app";
 
