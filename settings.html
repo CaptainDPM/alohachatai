@@ -414,12 +414,16 @@
                 throw new Error("Please enter a website URL");
               }
 
+              const idToken = await firebase.auth().currentUser.getIdToken();
+
               const response = await fetch(
-                "https://mistral-chatbot.vercel.app/api/scrape-and-embed",
+                "https://mistral-chatbot.vercel.app/api/scrape-and-embed.ts",
                 {
                   method: "POST",
+                  mode: "cors",
                   headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${idToken}`,
                   },
                   body: JSON.stringify({
                     url: websiteUrl,
