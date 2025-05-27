@@ -417,7 +417,7 @@
               const idToken = await firebase.auth().currentUser.getIdToken();
 
               const response = await fetch(
-                "https://mistral-chatbot.vercel.app/api/scrape-and-embed.ts",
+                "https://mistral-chatbot.vercel.app/api/scrape-and-embed",
                 {
                   method: "POST",
                   mode: "cors",
