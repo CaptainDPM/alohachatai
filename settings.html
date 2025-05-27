@@ -405,20 +405,37 @@
         document
           .getElementById("saveBusinessInfo")
           .addEventListener("click", async () => {
-            const websiteUrl = document.getElementById("websiteUrl").value;
-            const tenantId = firebase.auth().currentUser.uid;
-            const API_URL = "https://mistral-chatbot.vercel.app";
+            try {
+              const websiteUrl = document.getElementById("websiteUrl").value;
+              const tenantId = firebase.auth().currentUser.uid;
+              const API_URL = "https://mistral-chatbot.vercel.app";
 
-            const response = await fetch(`${API_URL}/api/scrape-and-embed`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ url: websiteUrl, tenantId }),
-            });
+              // First check if URL is valid
+              if (!websiteUrl || !websiteUrl.startsWith("http")) {
+                throw new Error("Please enter a valid website URL");
+              }
 
-            if (response.ok) {
-              alert("Website data processed successfully!");
-            } else {
-              alert("Error: Could not save website.");
+              const response = await fetch(`${API_URL}/api/scrape-and-embed`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${await firebase
+                    .auth()
+                    .currentUser.getIdToken()}`,
+                },
+                body: JSON.stringify({ url: websiteUrl, tenantId }),
+              });
+
+              if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || "Request failed");
+              }
+
+              const data = await response.json();
+              alert(`Success! Processed ${data.chunksProcessed} chunks.`);
+            } catch (error) {
+              console.error("Error:", error);
+              alert(`Error: ${error.message}`);
             }
           });
 
