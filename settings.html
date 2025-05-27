@@ -408,31 +408,34 @@
             try {
               const websiteUrl = document.getElementById("websiteUrl").value;
               const tenantId = firebase.auth().currentUser.uid;
-              const API_URL = "https://mistral-chatbot.vercel.app";
 
-              // First check if URL is valid
-              if (!websiteUrl || !websiteUrl.startsWith("http")) {
-                throw new Error("Please enter a valid website URL");
+              // Simple validation
+              if (!websiteUrl) {
+                throw new Error("Please enter a website URL");
               }
 
-              const response = await fetch(`${API_URL}/api/scrape-and-embed`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${await firebase
-                    .auth()
-                    .currentUser.getIdToken()}`,
-                },
-                body: JSON.stringify({ url: websiteUrl, tenantId }),
-              });
+              const response = await fetch(
+                "https://mistral-chatbot.vercel.app/api/scrape-and-embed",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    url: websiteUrl,
+                    tenantId: tenantId,
+                  }),
+                }
+              );
 
               if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.message || "Request failed");
+                throw new Error(error.error || "Request failed");
               }
 
-              const data = await response.json();
-              alert(`Success! Processed ${data.chunksProcessed} chunks.`);
+              const result = await response.json();
+              console.log("Success:", result);
+              alert(`Success! Processed ${result.chunksProcessed} chunks.`);
             } catch (error) {
               console.error("Error:", error);
               alert(`Error: ${error.message}`);
