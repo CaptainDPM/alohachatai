@@ -375,7 +375,8 @@
             body: JSON.stringify({
               url: websiteUrl,
               tenantId: tenantId
-            })
+            }),
+            credentials: 'include'
           });
 
           if (!response.ok) {
